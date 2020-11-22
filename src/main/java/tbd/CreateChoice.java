@@ -11,41 +11,31 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
-import tbd.http.AddRequest;
-import tbd.http.AddResponse;
-import tbd.db.ConstantsDAO;
+import tbd.http.CreateChoiceRequest;
+import tbd.http.CreateChoiceResponse;
+import tbd.db.ChoiceDAO;
 import tbd.model.Choice;
 import tbd.model.Constant;
 
-public class CreateChoice implements RequestHandler<AddRequest,AddResponse> {
+public class CreateChoice implements RequestHandler<CreateChoiceRequest,CreateChoiceResponse> {
 
 	LambdaLogger logger;
 	
 	private AmazonS3 s3 = null;
 	
-
-
-	/** Load from RDS, if it exists
+	/*
+	 * Function to access the RDS and create the choice with given parameters. 
+	 * Returns true if successful. 
 	 * 
-	 * @throws Exception 
+	 * 
 	 */
-	double loadValueFromRDS(String arg) throws Exception {
-		if (logger != null) { logger.log("in loadValue"); }
-		ConstantsDAO dao = new ConstantsDAO();
-		System.out.println("You connected!");
-		Constant constant = dao.getConstant(arg);
-		//dao.addConstant(new Constant("internetblake", 12));
-		dao.addChoice(new Choice("whoiswho", "you decide", 1, 25, "", "", "", "", ""));
-		return constant.value;
-	}
-	
 	boolean createChoice(String choiceName, String choiceDescription, int maxUsers,
 			String alternative1, String alternative2, String alternative3, String alternative4, String alternative5) throws Exception{
 		try {
 		if (logger != null) { logger.log("in createChoice"); }
-		ConstantsDAO dao = new ConstantsDAO();
+		ChoiceDAO dao = new ChoiceDAO();
 		System.out.println("You connected!");
-		//dao.addConstant(new Constant("internetblake", 12));
+
 		dao.addChoice(new Choice(choiceName, choiceDescription, 1, maxUsers, alternative1, alternative2, alternative3, alternative4, alternative5));
 
 		return false;
@@ -57,37 +47,37 @@ public class CreateChoice implements RequestHandler<AddRequest,AddResponse> {
 		
 	}
 	
+	
+	/*
+	 * 
+	 * handleRequest is takes the JSON input (in this case information about a choice), 
+	 * and adds that choice to the RDS and returns a successful JSON or a fail JSON.
+	 *
+	 *
+	 */
+
 	@Override
-	public AddResponse handleRequest(AddRequest req, Context context) {
-		AddRequest req1 = req;
-		//AddRequest req1 = new AddRequest("20", "30");
+	public CreateChoiceResponse handleRequest(CreateChoiceRequest req, Context context) {
 		logger = context.getLogger();
-		logger.log("Loading Java Lambda handler of RequestHandler");
-		logger.log(req1.toString());
 
 		boolean fail = false;
 		String failMessage = "";
-		double val1 = 0.0;
-		double val2 = 0.0;
 
-		
 		try {
-			//loadValueFromRDS("e");
-			fail = createChoice(req1.getchoiceName(), req1.getchoiceDescription(), req1.getmaxUsers(), req1.getalternative1(), req1.getalternative2(),
-					req1.getalternative3(), req1.getalternative4(), req1.getalternative5());
+			fail = createChoice(req.getuuid(), req.getchoiceDescription(), req.getmaxUsers(), req.getalternative1(), req.getalternative2(),
+					req.getalternative3(), req.getalternative4(), req.getalternative5());
 		}
 		catch (Exception e) {
 			fail = true;
 			failMessage = "Failed to add choice!";
 		}
 
-		// compute proper response and return. Note that the status code is internal to the HTTP response
-		// and has to be processed specifically by the client code.
-		AddResponse response;
+
+		CreateChoiceResponse response;
 		if (fail) {
-			response = new AddResponse(400, failMessage);
+			response = new CreateChoiceResponse(400, failMessage);
 		} else {
-			response = new AddResponse("Success", 200);  // success
+			response = new CreateChoiceResponse("Success", 200);  // success
 		}
 
 		return response; 
