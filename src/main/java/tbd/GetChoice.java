@@ -11,38 +11,24 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
-import tbd.http.AddChoiceResponse;
+import tbd.http.GetChoiceResponse;
 import tbd.http.GetChoiceRequest;
-import tbd.http.AddResponse;
-import tbd.db.ConstantsDAO;
+import tbd.http.CreateChoiceResponse;
+import tbd.db.ChoiceDAO;
 import tbd.model.Choice;
 import tbd.model.Constant;
 
-public class GetChoice implements RequestHandler<GetChoiceRequest,AddChoiceResponse> {
+public class GetChoice implements RequestHandler<GetChoiceRequest,GetChoiceResponse> {
 
 	LambdaLogger logger;
 	
 	private AmazonS3 s3 = null;
 	
-
-	/** Load from RDS, if it exists
-	 * 
-	 * @throws Exception 
-	 */
-	double loadValueFromRDS(String arg) throws Exception {
-		if (logger != null) { logger.log("in loadValue"); }
-		ConstantsDAO dao = new ConstantsDAO();
-		System.out.println("You connected!");
-		Constant constant = dao.getConstant(arg);
-		//dao.addConstant(new Constant("internetblake", 12));
-		dao.addChoice(new Choice("whoiswho", "you decide", 1, 25, "", "", "", "", ""));
-		return constant.value;
-	}
 	
 	Choice getChoice(String choiceName) throws Exception{
 		try {
 		if (logger != null) { logger.log("in createChoice"); }
-		ConstantsDAO dao = new ConstantsDAO();
+		ChoiceDAO dao = new ChoiceDAO();
 		System.out.println("You connected!");
 		//dao.addConstant(new Constant("internetblake", 12));
 		Choice choice = dao.getChoice(choiceName);
@@ -62,8 +48,17 @@ public class GetChoice implements RequestHandler<GetChoiceRequest,AddChoiceRespo
 		
 	}
 	
+	
+	/*
+	 * 
+	 * handleRequest is takes the JSON input (in this case the UUID of a choice), 
+	 * and gets that choice from o the RDS and returns a successful JSON with the choice or a fail JSON with no choice.
+	 *
+	 *
+	 */
+	
 	@Override
-	public AddChoiceResponse handleRequest(GetChoiceRequest req, Context context) {
+	public GetChoiceResponse handleRequest(GetChoiceRequest req, Context context) {
 		GetChoiceRequest req1 = req;
 		//GetChoiceRequest req1 = new GetChoiceRequest("20", "30");
 		logger = context.getLogger();
@@ -76,7 +71,7 @@ public class GetChoice implements RequestHandler<GetChoiceRequest,AddChoiceRespo
 		Choice choice = null;
 		try {
 			//loadValueFromRDS("e");
-			choice = getChoice(req1.getchoiceName());
+			choice = getChoice(req1.getuuid());
 		}
 		catch (Exception e) {
 			fail = true;
@@ -88,11 +83,11 @@ public class GetChoice implements RequestHandler<GetChoiceRequest,AddChoiceRespo
 		}
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		AddChoiceResponse response;
+		GetChoiceResponse response;
 		if (fail) {
-			response = new AddChoiceResponse(400, failMessage);
+			response = new GetChoiceResponse(400, failMessage);
 		} else {
-			response = new AddChoiceResponse(200, choice);  // success
+			response = new GetChoiceResponse(200, choice);  // success
 		}
 
 		System.out.println(response);
