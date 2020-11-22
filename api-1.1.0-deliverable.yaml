@@ -1,0 +1,372 @@
+openapi: 3.0.0
+info:
+  version: 1.1.0-deliverable
+  title: Lisp Team API
+  description: 'Initial API for Team Lisp'
+paths:
+  /Choice:
+    post:
+      description: "Create a choice"
+      operationId: createChoice
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/NewChoice'
+      responses:
+        '200':
+          description: 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChoiceUUID'
+            
+        '400':
+          description: 400 Response
+  /Choice/{choiceUUID}:
+    get:
+      operationId: getChoice
+      description: "Get specific choice from database"
+      parameters:
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: 200 Response
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/Choice'
+        '400':
+          description: 400 Response
+    post:
+      operationId: completeChoice
+      description: "Pick an alternative and complete a choice"
+      parameters:
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/ApproveAlternative'
+      responses:
+        '200':
+          description: 200 Response
+          
+        '400':
+          description: 400 Response
+  /Choice/{choiceUUID}/CreateParticipant:
+    post:
+      operationId: createParticipant
+      description: "Create a participant for a given Choice"
+      parameters: 
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/ChoiceParticipantCredentials'
+      responses:
+        '200':
+          description: 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChoiceParticipant'
+          
+        '400':
+          description: 400 Response
+          
+  /Choice/{choiceUUID}/LoginParticipant:
+    post:
+      operationId: participantLogin
+      description: "Login a participant for a given Choice"
+      parameters: 
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/ChoiceParticipantCredentials'
+      responses:
+        '200':
+          description: 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChoiceParticipant'
+          
+        '400':
+          description: 400 Response
+          
+  /Choice/{choiceUUID}/{alternativeIndex}/Feedback:
+    post:
+      operationId: addFeedback
+      description: "Adds feedback to an alternative"
+      parameters:
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: alternativeIndex
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/NewFeedback'
+      responses:
+        '200':
+          description: 200 Response
+        '400':
+          description: 400 Response
+  /Choice/{choiceUUID}/{alternativeIndex}/Like:
+    post:
+      operationId: likeAlternative
+      description: "Likes an alternative"
+      parameters:
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: alternativeIndex
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/Rate'
+      responses:
+        '200':
+          description: 200 Response
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/RatingChange'
+        '400':
+          description: 400 Response
+  /Choice/{choiceUUID}/{alternativeIndex}/Dislike:
+    post:
+      operationId: dislikeAlternative
+      description: "Dislikes an alternative"
+      parameters:
+        - name: choiceUUID
+          in: path
+          required: true
+          schema:
+            type: string
+        - name: alternativeIndex
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/Rate'
+      responses:
+        '200':
+          description: 200 Response
+          content:
+            application/json: 
+              schema:
+                $ref: '#/components/schemas/RatingChange'
+        '400':
+          description: 400 Response
+  /Admin: 
+    get:
+      operationId: getReport
+      description: "Get report of all Choices"
+      responses: 
+        '200':
+          description: 200 Response
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ChoiceReport'
+        '400':
+          description: 400 Response
+  /Admin/{days}:
+    post:
+      operationId: deleteStale
+      parameters:
+        - name: days
+          in:  path
+          required: true
+          schema:
+            type: number
+      responses: 
+        '200':
+          description: 200 Response
+          content:
+            application/json:
+              schema:
+                type: integer
+        '400':
+          description: 400 Response
+    
+  /Adim/{adminLogin}:
+    post:
+      operationId: adminLogin
+      description: "Login an admin"
+      parameters: 
+        - name: adminLogin
+          in: path
+          required: true
+          schema:
+            type: string
+        - $ref: '#/components/schemas/AdminCredentials'
+      responses:
+        '200':
+          description: 200 Response
+        '400':
+          description: 400 Response
+components:
+    schemas:
+      NewChoice:
+        properties:
+          description:
+            type: string
+          teamMembers:
+            type: integer
+          alternative1:
+            type: string
+          alternative2:
+            type: string
+          alternative3:
+            type: string
+          alternative4:
+            type: string
+          alternative5:
+            type: string
+        required:
+          - description
+          - teamMembers
+          - alternative1
+          - alternative2
+      ChoiceUUID:
+        properties:
+          uuid:
+            type: string
+      Choice:
+        properties:
+          approvedAlternativeIndex:
+            type: integer
+          alternative1:
+            $ref: "#/components/schemas/Alternative"
+          alternative2:
+            $ref: "#/components/schemas/Alternative"       
+          alternative3:
+            $ref: "#/components/schemas/Alternative"
+          alternative4:
+            $ref: "#/components/schemas/Alternative"   
+          alternative5:
+            $ref: "#/components/schemas/Alternative"  
+        required:
+          - approvedAlternativeIndex
+          - alternative1
+          - alternative2
+      Alternative:
+        properties:
+          name:
+            type: string
+          likes:
+            type: integer
+          dislikes:
+            type: integer
+          feedback:
+            type: array
+            items:
+              $ref: "#/components/schemas/Feedback"
+        required:
+          - name
+          - likes
+          - dislikes
+          - feedback
+      Feedback:
+        properties:
+          author: 
+            type: string
+          timeCreated:
+            type: string
+          comment:
+            type: string
+        required:
+          - author
+          - timeCreated
+          - comment
+      ChoiceParticipant:
+        properties:
+          uuid:
+            type: string
+        required:
+          - uuid
+      ChoiceParticipantCredentials:
+        properties:
+          name:
+            type: string
+          password:
+            type: string
+        required:
+          - name
+      ApproveAlternative:
+        properties:
+          alternativeIndex:
+            type: integer
+        required:
+            - alternativeIndex
+      NewFeedback:
+        properties:
+          userUUID:
+            type: string
+          comment:
+            type: string
+        required:
+          - userUUID
+          - comment
+      Rate:
+        properties:
+          userUUID:
+            type: string
+        required:
+          - userUUID
+      RatingChange:
+        properties:
+          likeChange:
+            type: integer
+          dislikeChange:
+            type: integer
+        required:
+          - likeChange
+          - dislikeChange
+      ChoiceReport:
+        properties:
+          choices:
+            type: array
+            items:
+              $ref: "#/components/schemas/ChoiceReportChoice"
+        required:
+          - choices
+      ChoiceReportChoice:
+        properties:
+          name:
+            type: string
+          uuid:
+            type: string
+          dateCreated:
+            type: string
+          dateCompleted:
+            type: string
+        required:
+          - name
+          - uuid
+          - dateCreated
+      AdminCredentials:
+        properties:
+          name:
+            type: string
+          password:
+            type: string
+        required:
+          - name
+          - password
