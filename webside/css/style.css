@@ -1,0 +1,62 @@
+body {
+    background-color: #211A1E;
+    align-content: center;
+}
+
+#choiceName {
+    color: white;
+}
+
+.form {
+    margin: auto;
+    background-color: #9bc53D;
+    padding: 15px;
+    width: 60%;
+    margin-top: 50px;
+}
+
+label {
+    float: left;
+}
+
+input {
+    width: 100%;
+}
+
+h2 {
+    color: white;
+    font-family: 'Amaranth', sans-serif;
+    padding: 0px;
+    margin: 0px;
+}
+
+.choiceForm {
+    display: flex;
+    align-items: center;
+    padding-top: 10px;
+    
+}
+
+label {
+    color: white;
+    font-family: 'Amaranth', sans-serif;
+    font-size: 15px;
+    align-self: flex-start;
+    white-space: nowrap;
+    padding-right: 10px;
+}
+
+input {
+    font-family: 'Amaranth', sans-serif;
+    height: 25px;
+}
+
+#selectChoiceBtn {
+    display: inline-block;
+    margin-left: 20px;
+    height: 31px;
+}
+
+#createChoiceBtn {
+    margin-top: 10px;
+}
