@@ -2,7 +2,7 @@
 <html>
     
     <head>
-        <script src="../js/choiceview.js"></script>
+        <!--<script src="../js/choiceview.js"></script>-->
         <link rel="stylesheet" type="text/css" href="../css/choiceviewstyle.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Amaranth&display=swap" rel="stylesheet"> 
@@ -16,7 +16,18 @@
         </div>
         
         
-        <div id="choices">
+        <div id="login">
+            <h2>Participant Login</h2>
+            <input type="text" id="username" placeholder="username">
+            <br>
+            <input type="password" id="password" placeholder="password">
+            <br>
+            <input type="button" id="loginBtn" value="LOGIN">
+            <br>
+            <input type="button" id="createAccBtn" value="CREATE ACCOUNT">
+        </div>
+        
+        <div id="choices" class="blur">
             <div class="choice" id="alternative1">
                 <div class="choice-top">
                     <h1 id="alt1-name"></h1>
