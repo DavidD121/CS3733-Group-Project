@@ -1,7 +1,7 @@
 body {
     background-color: #211A1E;
     align-content: center;
-
+    font-family: 'Amaranth', sans-serif;
 }
 
 #choices {
@@ -56,14 +56,12 @@ body {
 
 .choice h1 {
     color: white;
-    font-family: 'Amaranth', sans-serif;
     text-align: center;
 }
 
 
 .addFeedback h2 {
     color: white;
-    font-family: 'Amaranth', sans-serif;
 }
 
 .addFeedback {
