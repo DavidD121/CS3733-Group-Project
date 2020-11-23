@@ -20,7 +20,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChoiceUUID'
-            
+
         '400':
           description: 400 Response
   /Choice/{choiceUUID}:
@@ -37,7 +37,7 @@ paths:
         '200':
           description: 200 Response
           content:
-            application/json: 
+            application/json:
               schema:
                 $ref: '#/components/schemas/Choice'
         '400':
@@ -55,14 +55,14 @@ paths:
       responses:
         '200':
           description: 200 Response
-          
+
         '400':
           description: 400 Response
   /Choice/{choiceUUID}/CreateParticipant:
     post:
       operationId: createParticipant
       description: "Create a participant for a given Choice"
-      parameters: 
+      parameters:
         - name: choiceUUID
           in: path
           required: true
@@ -76,15 +76,15 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChoiceParticipant'
-          
+
         '400':
           description: 400 Response
-          
+
   /Choice/{choiceUUID}/LoginParticipant:
     post:
       operationId: participantLogin
       description: "Login a participant for a given Choice"
-      parameters: 
+      parameters:
         - name: choiceUUID
           in: path
           required: true
@@ -98,10 +98,10 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/ChoiceParticipant'
-          
+
         '400':
           description: 400 Response
-          
+
   /Choice/{choiceUUID}/{alternativeIndex}/Feedback:
     post:
       operationId: addFeedback
@@ -143,7 +143,7 @@ paths:
         '200':
           description: 200 Response
           content:
-            application/json: 
+            application/json:
               schema:
                 $ref: '#/components/schemas/RatingChange'
         '400':
@@ -168,16 +168,30 @@ paths:
         '200':
           description: 200 Response
           content:
-            application/json: 
+            application/json:
               schema:
                 $ref: '#/components/schemas/RatingChange'
         '400':
           description: 400 Response
-  /Admin: 
+  /Admin:
+    post:
+      operationId: adminLogin
+      description: "Login an admin"
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdminCredentials'
+      responses:
+        '200':
+          description: 200 Response
+        '400':
+          description: 400 Response
+  /Admin/ChoiceReport:
     get:
       operationId: getReport
       description: "Get report of all Choices"
-      responses: 
+      responses:
         '200':
           description: 200 Response
           content:
@@ -186,7 +200,7 @@ paths:
                 $ref: '#/components/schemas/ChoiceReport'
         '400':
           description: 400 Response
-  /Admin/{days}:
+  /Admin/Delete/{days}:
     post:
       operationId: deleteStale
       parameters:
@@ -195,30 +209,13 @@ paths:
           required: true
           schema:
             type: number
-      responses: 
+      responses:
         '200':
           description: 200 Response
           content:
             application/json:
               schema:
                 type: integer
-        '400':
-          description: 400 Response
-    
-  /Adim/{adminLogin}:
-    post:
-      operationId: adminLogin
-      description: "Login an admin"
-      parameters: 
-        - name: adminLogin
-          in: path
-          required: true
-          schema:
-            type: string
-        - $ref: '#/components/schemas/AdminCredentials'
-      responses:
-        '200':
-          description: 200 Response
         '400':
           description: 400 Response
 components:
@@ -255,13 +252,13 @@ components:
           alternative1:
             $ref: "#/components/schemas/Alternative"
           alternative2:
-            $ref: "#/components/schemas/Alternative"       
+            $ref: "#/components/schemas/Alternative"
           alternative3:
             $ref: "#/components/schemas/Alternative"
           alternative4:
-            $ref: "#/components/schemas/Alternative"   
+            $ref: "#/components/schemas/Alternative"
           alternative5:
-            $ref: "#/components/schemas/Alternative"  
+            $ref: "#/components/schemas/Alternative"
         required:
           - approvedAlternativeIndex
           - alternative1
@@ -285,7 +282,7 @@ components:
           - feedback
       Feedback:
         properties:
-          author: 
+          author:
             type: string
           timeCreated:
             type: string
