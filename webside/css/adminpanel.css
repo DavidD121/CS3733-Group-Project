@@ -1,0 +1,62 @@
+body {
+    background-color: #211A1E;
+    align-content: center;
+    text-align: center;
+    font-family: 'Amaranth', sans-serif;
+}
+
+input {
+    width: 100%;
+}
+
+h1 {
+    font-size: 80px;
+}
+
+h1, h2{
+    color: white;
+}
+
+input {
+    font-family: 'Amaranth', sans-serif;
+}
+
+#deleteChoices {
+    background-color: #C3423F;
+}
+
+#deleteChoicesInput {
+    width: 80%;
+}
+
+#deleteChoices h2 {
+    padding-top: 10px;
+}
+
+#genChoiceReportBtn {
+    width 80%;
+    background-color: #9bc53d;
+    color: white;
+    font-size: 40px;
+}
+
+.contentPane h1 {
+    margin: 100px;
+}
+
+
+.contentPane {
+    margin: 20px auto;
+    width: 80%;
+    height: 130px;
+}
+
+
+#deleteChoicesBtn {
+    margin-top: 10px;
+    width: 50%;
+}
+
+#login {
+    color: red;
+}

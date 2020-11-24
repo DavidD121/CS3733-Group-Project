@@ -1,7 +1,7 @@
 body {
     background-color: #211A1E;
     align-content: center;
-
+    font-family: 'Amaranth', sans-serif;
 }
 
 #choices {
@@ -56,14 +56,12 @@ body {
 
 .choice h1 {
     color: white;
-    font-family: 'Amaranth', sans-serif;
     text-align: center;
 }
 
 
 .addFeedback h2 {
     color: white;
-    font-family: 'Amaranth', sans-serif;
 }
 
 .addFeedback {
@@ -79,7 +77,7 @@ body {
     overflow-wrap: break-word;
 }
 
-.addFeedback input {
+input {
     font-family: 'Amaranth', sans-serif;
 }
 
@@ -93,7 +91,6 @@ body {
     background-color: white;
     margin: 10px;
     border-radius: 6px;
-    font-family: 'Amaranth', sans-serif;
 }
 
 
@@ -108,4 +105,54 @@ body {
 .test {
     padding-bottom: 35px;
     margin: 0px 10px;
+}
+
+#login {
+    margin: auto;
+    z-index: 1000;
+    background-color: white;
+    position: absolute;
+    top: 0; left: 0; bottom: 0; right: 0;
+    border-radius: 10px;
+    height: 25%;
+    width: 30%;
+    padding: 15px;
+    min-height: 200px;
+    border: 1px solid black;
+}
+
+#login input {
+    width: 100%;
+    box-sizing: border-box;
+    margin-bottom: 15px;
+    border-radius: 15px;
+    padding: 5px;
+    height: 30px;
+}
+
+#username, #password {
+
+}
+
+#username, #password, #createAccBtn {
+    background-color: #DCDCDC;
+    color: black;
+}
+
+#loginBtn {
+    background-color: #9bc53d;
+    color: white;
+}
+
+
+#login h2 {
+    text-align: center;
+}
+
+.blur {
+    -webkit-filter: blur(5px); 
+	-moz-filter: blur(5px); 
+	-o-filter: blur(5px); 
+	-ms-filter: blur(5px); 
+	filter: blur(5px); 
 }
