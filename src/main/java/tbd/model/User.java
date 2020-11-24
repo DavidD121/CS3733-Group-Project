@@ -25,6 +25,10 @@ public class User {
 		return this.uuid;
 	}
 	
+	public String getName() {
+		return this.name;
+	}
+	
 	public String getPassword() {
 		return this.password;
 	}
