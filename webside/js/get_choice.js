@@ -1,5 +1,3 @@
-function onGetChoice(){
-    let data = {};
-    data["uuid"] = document.getElementById("choiceID").value;
-
+function onGetChoice(uuid){
+    window.location = "./choiceview.html" + "?uuid=" + uuid;
 }

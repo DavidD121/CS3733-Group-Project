@@ -10,9 +10,10 @@ function selectChoice() {
     
     btn.addEventListener("click", function() {
 
-        var uuid = "choice-1";
+        var uuid = document.getElementById("choiceID").value;
+        onGetChoice(uuid);
 
-        window.location = "./choiceview.html" + "?uuid=" + uuid; 
+
     });
     
     
