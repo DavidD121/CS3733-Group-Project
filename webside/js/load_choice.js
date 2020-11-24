@@ -23,7 +23,6 @@ function getChoiceInfo() {
     } else {
         console.log("NO INFORMATION RECIEVED!!!");
         window.location = "./404.html"; 
-
     }
   };
 }
@@ -35,11 +34,11 @@ function processChoiceResponse(result) {
     document.getElementById("choiceDescription").innerHTML = choice["description"];
     
     for(let i = 1; i < 6; i++) {
-        let alternativeName = choice["alternative" + i]["name"];
-        if(alternativeName != null) {//alt1-name
-            document.getElementById("alt" + i + "-name").innerHTML = alternativeName;
+        let alternative = choice["alternative" + i];
+        if(alternative != undefined) {
+            document.getElementById("alt" + i + "-name").innerHTML = alternative["name"];
         } else {
-            document.getElementById("alternative" + i).style.visibility = "hidden";
+            document.getElementById("alternative" + i).remove();
         }
     }
 }

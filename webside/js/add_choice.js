@@ -22,8 +22,8 @@ function onAddChoice(e) {
     xhr.send(js);
     
     xhr.onloadend = function () {
-    console.log(xhr);
     console.log(xhr.request);
+        
     if (xhr.readyState == XMLHttpRequest.DONE) {
     	 if (xhr.status == 200) {
 	      console.log ("XHR:" + xhr.responseText);
@@ -34,7 +34,7 @@ function onAddChoice(e) {
 			  alert (err);
     	 }
     } else {
-      processCreateResponse("N/A");
+        
     }
   };
 }
