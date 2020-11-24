@@ -6,12 +6,12 @@ function init() {
 
 function selectChoice() {
     choiceUUID = document.location.search.replace(/^.*?\=/, "");
-    processChoiceResponse(null);
+    getChoiceInfo();
 }
 
 function getChoiceInfo() {
    var xhr = new XMLHttpRequest();
-   xhr.open("GET", choice_get_url + choiceUUID, true);
+   xhr.open("GET", choice_get_url + "/" + choiceUUID, true);
    xhr.send();
    
    console.log("sent");
@@ -20,32 +20,31 @@ function getChoiceInfo() {
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
       console.log ("XHR:" + xhr.responseText);
-      processListResponse(xhr.responseText);
+        console.log(xhr.status);
+      processChoiceResponse(xhr.responseText);
     } else {
-      console.log("NO INFORMATION RECIEVED!!!");
+        console.log("NO INFORMATION RECIEVED!!!");
+        window.location = "./404.html"; 
+
     }
   };
 }
 
 function processChoiceResponse(result) {
-    //let choice = JSON.parse(result);
-   // let choice = {};
-    //choice["description"] = "TEST";
-    //choice["alternative1.name"] = "TEST2"
+    let choice = JSON.parse(result);
+    console.log("JSON: " + choice);
+    document.getElementById("choiceUUID").innerHTML = "UUID: " + choiceUUID;
     document.getElementById("choiceDescription").innerHTML = choice["description"];
     
-    /*for(let i = 1; i < 6; i++) {
-        let alternativeName = choice["alternative" + i + ".name"];
-
+    for(let i = 1; i < 6; i++) {
+        let alternativeName = choice["alternative" + i]["name"];
+        console.log(alternativeName);
         if(alternativeName != null) {//alt1-name
-            document.getElementById("alt" + i + "-name") = "alternativeName";
+            document.getElementById("alt" + i + "-name").innerHTML = alternativeName;
         } else {
             document.getElementById("alternative" + i).style.visibility = "hidden";
         }
-    }*/
-    
-    document.getElementById("choiceUUID").innerHTML = "UUID: " + choiceUUID;
-    
+    }
 }
 
 document.addEventListener("DOMContentLoaded", function() {
