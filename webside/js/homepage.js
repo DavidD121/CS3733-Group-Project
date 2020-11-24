@@ -9,7 +9,7 @@ function selectChoice() {
     const btn = document.getElementById("selectChoiceBtn");
     
     btn.addEventListener("click", function() {
-        var uuid = "aabbccdd";
+        var uuid = "aabbccdd"; //<--- Replace this with value from form
         window.location = "./choiceview.html" + "?uuid=" + uuid; 
     });
     
