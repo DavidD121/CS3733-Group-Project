@@ -43,7 +43,7 @@ public class DatabaseUtil {
 		}
 		
 		//String rdsMySqlDatabaseUrl = System.getenv("rdsMySqlDatabaseUrl");
-		String rdsMySqlDatabaseUrl = "tobedecideddatabase.ckffibxdyrj2.us-east-1.rds.amazonaws.com";
+		String rdsMySqlDatabaseUrl = "tobedecideddb.ckffibxdyrj2.us-east-1.rds.amazonaws.com";
 
 		if (rdsMySqlDatabaseUrl == null) {
 			System.err.println("Environment variable rdsMySqlDatabaseUrl is not set!");

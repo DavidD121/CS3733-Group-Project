@@ -22,20 +22,33 @@ import tbd.model.Choice;
 import tbd.model.Constant;
 import tbd.model.User;
 
-public class UserLogin implements RequestHandler<LoginUserRequest,LoginUserResponse> {
+public class CreateUser implements RequestHandler<LoginUserRequest,LoginUserResponse> {
 
 	LambdaLogger logger;
 	
 	private AmazonS3 s3 = null;
 	
-	User getUser(String choiceID, String userName, String password) throws Exception{
+
+	/** Load from RDS, if it exists
+	 * 
+	 * @throws Exception 
+	 */
+	
+	User createUser(String choiceID, String userName, String password) throws Exception{
 		try {
-			if (logger != null) { logger.log("in getUser"); }
+			if (logger != null) { logger.log("in createUser"); }
 			ConstantsDAO dao = new ConstantsDAO();
 			System.out.println("You connected!");
 			User user = dao.getUser(choiceID, userName);
 			
-			return user;
+			//If user doesn't already exist, create new one and return it
+			if(user == null) {
+				if (logger != null) { logger.log("trying to create new user"); }
+				return dao.createNewUser(choiceID, userName, password);
+			} else {
+				//if user exists, return null
+				return null;
+			}
 		}
 		catch (Exception e) {
 			System.out.println("getUser failed!");
@@ -51,10 +64,10 @@ public class UserLogin implements RequestHandler<LoginUserRequest,LoginUserRespo
 		logger.log(req1.toString());
 		boolean fail = false;
 		String failMessage = "";
-
 		User user = null;
 		try {
-			user = getUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
+			user = createUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
+			if (logger != null) { logger.log("New user " + user.getName() + " created"); }
 		} catch (Exception e) {
 			fail = true;
 			failMessage = "Failed to read database!";
@@ -62,21 +75,8 @@ public class UserLogin implements RequestHandler<LoginUserRequest,LoginUserRespo
 		
 		if(user == null) {
 			fail = true;
-			failMessage = "User does not exist";
-		} else {
-			//Checking password
-			if(user.getPassword() != null && user.getPassword().length() != 0) {
-				if(req1.getPassword() == null || req1.getPassword().length() == 0) {
-					fail = true;
-					failMessage = "Password required";
-				} else {
-					if(!req1.getPassword().equals(user.getPassword())) {
-						fail = true;
-						failMessage = "Incorrect password";
-					}
-				}
-			}
-		}
+			failMessage = "User already exists";
+		} 
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
