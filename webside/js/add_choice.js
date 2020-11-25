@@ -11,30 +11,43 @@ function onAddChoice(e) {
         
         if(!!alternative) {
             data["alternative" + i] = alternative;
+        } else {
+            break;
         }
     }
     
-    var js = JSON.stringify(data);
-    console.log("JS:" + js);
-    
-    var xhr = new XMLHttpRequest();
-    xhr.open("POST", choice_add_url, true);
-    xhr.send(js);
-    
-    xhr.onloadend = function () {
-    console.log(xhr.request);
-        
-    if (xhr.readyState == XMLHttpRequest.DONE) {
-    	 if (xhr.status == 200) {
-	      console.log ("XHR:" + xhr.responseText);
-    	 } else {
-    		 console.log("actual:" + xhr.responseText)
-			  var js = JSON.parse(xhr.responseText);
-			  var err = js["response"];
-			  alert (err);
-    	 }
+    if(isDataValid(data)) { 
+        var js = JSON.stringify(data);
+
+        var xhr = new XMLHttpRequest();
+        xhr.open("POST", choice_add_url, true);
+        xhr.send(js);
+
+        xhr.onloadend = function () {
+
+        if (xhr.readyState == XMLHttpRequest.DONE) {
+             if (xhr.status == 200) {
+              console.log ("XHR:" + xhr.responseText);
+                 let response = JSON.parse(xhr.responseText);
+                 onGetChoice(response.uuid);
+             } else {
+                 console.log("actual:" + xhr.responseText)
+                 var js = JSON.parse(xhr.responseText);
+                 var err = js["response"];
+                 alert (err);
+             }
+        }
+      };
     } else {
-        
+        alert("Please fill out all required fields!");
     }
-  };
+}
+
+function isDataValid(data) {
+    let teamMembers = data["teamMembers"];
+    let description = data["description"];
+    let alt1 = data["alternative1"];
+    let alt2 = data["alternative2"];
+    
+    return (teamMembers != undefined && teamMembers > 0) && (description != "") && alt1 != undefined && alt2 != undefined;
 }
