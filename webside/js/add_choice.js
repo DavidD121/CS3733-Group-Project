@@ -27,11 +27,9 @@ function onAddChoice(e) {
 
         if (xhr.readyState == XMLHttpRequest.DONE) {
              if (xhr.status == 200) {
-              console.log ("XHR:" + xhr.responseText);
                  let response = JSON.parse(xhr.responseText);
                  onGetChoice(response.uuid);
              } else {
-                 console.log("actual:" + xhr.responseText)
                  var js = JSON.parse(xhr.responseText);
                  var err = js["response"];
                  alert (err);
@@ -51,3 +49,4 @@ function isDataValid(data) {
     
     return (teamMembers != undefined && teamMembers > 0) && (description != "") && alt1 != undefined && alt2 != undefined;
 }
+

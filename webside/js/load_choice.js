@@ -17,8 +17,6 @@ function getChoiceInfo() {
   // This will process results and update HTML as appropriate. 
   xhr.onloadend = function () {
     if (xhr.readyState == XMLHttpRequest.DONE) {
-        console.log ("XHR:" + xhr.responseText);
-        //console.log(xhr.status);
       processChoiceResponse(xhr.responseText);
     } else {
         console.log("NO INFORMATION RECIEVED!!!");
@@ -29,18 +27,23 @@ function getChoiceInfo() {
 
 function processChoiceResponse(result) {
     let choice = JSON.parse(result);
+    let uuid = choice["uuid"];
+    if(uuid == -1) {
+        window.location = "./404.html"; 
+    } else {
+        document.getElementById("choiceUUID").innerHTML = "UUID: " + uuid;
+        document.getElementById("choiceDescription").innerHTML = choice["description"];
     
-    document.getElementById("choiceUUID").innerHTML = "UUID: " + choiceUUID;
-    document.getElementById("choiceDescription").innerHTML = choice["description"];
-    
-    for(let i = 1; i < 6; i++) {
-        let alternative = choice["alternative" + i];
-        if(alternative != undefined) {
-            document.getElementById("alt" + i + "-name").innerHTML = alternative["name"];
-        } else {
-            document.getElementById("alternative" + i).remove();
+        for(let i = 1; i < 6; i++) {
+            let alternative = choice["alternative" + i];
+            if(alternative != undefined) {
+                document.getElementById("alt" + i + "-name").innerHTML = alternative["name"];
+            } else {
+                document.getElementById("alternative" + i).remove();
+            }
         }
     }
+    
 }
 
 document.addEventListener("DOMContentLoaded", function() {
