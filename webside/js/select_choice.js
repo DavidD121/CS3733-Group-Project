@@ -13,7 +13,6 @@ function selectChoice() {
         var uuid = document.getElementById("choiceID").value;
         onGetChoice(uuid);
 
-
     });
     
     
