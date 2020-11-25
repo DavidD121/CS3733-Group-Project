@@ -1,4 +1,4 @@
-function init(){
+function init2(){
     const btn = document.getElementById("loginBtn");
     btn.addEventListener("click", login);
 
@@ -18,12 +18,9 @@ function getAccountInfo(){
 function login(){
     let data = getAccountInfo();
 
-    /*
-    let js = JSON.stringify(data);
-    console.log("JS:" + js); not sure if this is needed?*/
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", choice_complete_url + "/" + choiceUUID, true);
+    xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/LoginParticipant", true);
     xhr.send();
 
     xhr.onloadend = function () {
@@ -33,7 +30,7 @@ function login(){
             let info = JSON.parse(json );
             console.log(json);
             console.log(info);
-            if(info["response"]=="200"){
+            if(info["statusCode"]=="200"){
                 document.getElementById("choices").classList.toggle('blur');
                 document.getElementById("login").remove();
             }
@@ -56,13 +53,10 @@ function login(){
 //create a new account
 function createAccount(){
     let data = getAccountInfo();
-
-    /*
-    let js = JSON.stringify(data);
-    console.log("JS:" + js); */
+    
 
     let xhr = new XMLHttpRequest();
-    xhr.open("POST", choice_complete_url + "/" + choiceUUID, true);
+    xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/CreateParticipant", true);
     xhr.send();
 
     xhr.onloadend = function () {
@@ -73,12 +67,12 @@ function createAccount(){
             let info = JSON.parse(json);
             console.log(json);
             console.log(info);
-            if(info["response"]=="200"){
+            if(info["statusCode"]=="200"){
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("login").remove();
             }
             else {
-                console.log("Fail");
+                console.log(info["error"]);
             }
 
         }
@@ -93,6 +87,6 @@ function createAccount(){
 
 
 document.addEventListener("DOMContentLoaded", function() {
-    init();
+    init2();
 });
 
