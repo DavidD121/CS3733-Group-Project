@@ -66,7 +66,7 @@ public class CreateUser implements RequestHandler<LoginUserRequest,LoginUserResp
 		String failMessage = "";
 		User user = null;
 		try {
-			user = createUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
+			user = createUser(req1.getChoiceUUID(), req1.getName(), req1.getPassword());
 			if (logger != null) { logger.log("New user " + user.getName() + " created"); }
 		} catch (Exception e) {
 			fail = true;
