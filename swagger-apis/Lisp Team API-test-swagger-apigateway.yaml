@@ -1,0 +1,439 @@
+---
+swagger: "2.0"
+info:
+  description: "Initial API for Team Lisp"
+  version: "1.1.0-deliverable"
+  title: "Lisp Team API"
+host: "v4ylc7usk6.execute-api.us-east-1.amazonaws.com"
+basePath: "/test"
+schemes:
+- "https"
+paths:
+  /Admin:
+    post:
+      operationId: "adminLogin"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - in: "body"
+        name: "AdminCredentials"
+        required: true
+        schema:
+          $ref: "#/definitions/AdminCredentials"
+      responses:
+        200:
+          description: "200 response"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Admin/ChoiceReport:
+    get:
+      operationId: "getReport"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ChoiceReport"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Admin/Delete/{days}:
+    post:
+      operationId: "deleteStale"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "days"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice:
+    post:
+      produces:
+      - "application/json"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/Response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:859378777949:function:CreateChoice/invocations"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses: {}
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice/{choiceUUID}:
+    get:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ChoiceUUID"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:859378777949:function:GetChoice/invocations"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\n   \"uuid\": \"$input.params('choiceUUID')\"\n}"
+        passthroughBehavior: "when_no_templates"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+    post:
+      operationId: "completeChoice"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses: {}
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice/{choiceUUID}/CreateParticipant:
+    post:
+      operationId: "createParticipant"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ChoiceParticipant"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:859378777949:function:CreateUser/invocations"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses: {}
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice/{choiceUUID}/LoginParticipant:
+    post:
+      operationId: "participantLogin"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/ChoiceParticipant"
+          headers:
+            Access-Control-Allow-Origin:
+              type: "string"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "aws"
+        uri: "arn:aws:apigateway:us-east-1:lambda:path/2015-03-31/functions/arn:aws:lambda:us-east-1:859378777949:function:LoginUser/invocations"
+        responses:
+          default:
+            statusCode: "200"
+            responseParameters:
+              method.response.header.Access-Control-Allow-Origin: "'*'"
+        passthroughBehavior: "when_no_match"
+        httpMethod: "POST"
+        contentHandling: "CONVERT_TO_TEXT"
+    options:
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      responses: {}
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice/{choiceUUID}/{alternativeIndex}/Dislike:
+    post:
+      operationId: "dislikeAlternative"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "alternativeIndex"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/RatingChange"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice/{choiceUUID}/{alternativeIndex}/Feedback:
+    post:
+      operationId: "addFeedback"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "alternativeIndex"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+  /Choice/{choiceUUID}/{alternativeIndex}/Like:
+    post:
+      operationId: "likeAlternative"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+      - name: "alternativeIndex"
+        in: "path"
+        required: true
+        type: "string"
+      - name: "choiceUUID"
+        in: "path"
+        required: true
+        type: "string"
+      responses:
+        200:
+          description: "200 response"
+          schema:
+            $ref: "#/definitions/RatingChange"
+        400:
+          description: "400 response"
+      x-amazon-apigateway-integration:
+        type: "mock"
+        responses:
+          default:
+            statusCode: "200"
+        requestTemplates:
+          application/json: "{\"statusCode\": 200}"
+        passthroughBehavior: "when_no_match"
+definitions:
+  Response:
+    properties:
+      result:
+        type: "string"
+      statusCode:
+        type: "integer"
+        format: "int32"
+      error:
+        type: "string"
+  ChoiceUUID:
+    properties:
+      uuid:
+        type: "string"
+  ChoiceReportChoice:
+    required:
+    - "dateCreated"
+    - "name"
+    - "uuid"
+    properties:
+      name:
+        type: "string"
+      uuid:
+        type: "string"
+      dateCreated:
+        type: "string"
+      dateCompleted:
+        type: "string"
+  ChoiceParticipant:
+    required:
+    - "uuid"
+    properties:
+      uuid:
+        type: "string"
+  RatingChange:
+    required:
+    - "dislikeChange"
+    - "likeChange"
+    properties:
+      likeChange:
+        type: "integer"
+        format: "int32"
+      dislikeChange:
+        type: "integer"
+        format: "int32"
+  AdminCredentials:
+    required:
+    - "name"
+    - "password"
+    properties:
+      name:
+        type: "string"
+      password:
+        type: "string"
+  ChoiceReport:
+    required:
+    - "choices"
+    properties:
+      choices:
+        type: "array"
+        items:
+          $ref: "#/definitions/ChoiceReportChoice"
