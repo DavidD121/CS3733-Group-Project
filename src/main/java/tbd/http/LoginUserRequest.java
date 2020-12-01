@@ -25,6 +25,6 @@ public class LoginUserRequest {
 	public void setPassword(String p) { this.password = p; }
 	
 	public String toString() {
-		return "(User request) - choiceID: " + choiceID + "   name: " + name + "   password: " + password;
+		return "(User request) - choiceUUID: " + choiceID + "   name: " + name + "   password: " + password;
 	}
 }
