@@ -54,7 +54,7 @@ public class UserLogin implements RequestHandler<LoginUserRequest,LoginUserRespo
 
 		User user = null;
 		try {
-			user = getUser(req1.getChoiceUUID(), req1.getName(), req1.getPassword());
+			user = getUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
 		} catch (Exception e) {
 			fail = true;
 			failMessage = "Failed to read database!";

@@ -2,12 +2,12 @@ package tbd.http;
 
 public class LoginUserRequest {
 
-	String choiceUUID;
+	String choiceID;
 	String name;
 	String password;
 	
 	public LoginUserRequest(String c, String n, String p) {
-		this.choiceUUID = c;
+		this.choiceID = c;
 		this.name = n;
 		this.password = p;
 	}
@@ -15,8 +15,8 @@ public class LoginUserRequest {
 	public LoginUserRequest() {
 	}
 	
-	public String getChoiceUUID() { return this.choiceUUID; }	
-	public void setChoiceUUID(String n) { this.choiceUUID = n; }
+	public String getChoiceID() { return this.choiceID; }	
+	public void setChoiceID(String n) { this.choiceID = n; }
 	
 	public String getName() { return this.name; }
 	public void setName(String n) { this.name = n; }
@@ -25,6 +25,6 @@ public class LoginUserRequest {
 	public void setPassword(String p) { this.password = p; }
 	
 	public String toString() {
-		return "(User request) - choiceUUID: " + choiceUUID + "   name: " + name + "   password: " + password;
+		return "(User request) - choiceUUID: " + choiceID + "   name: " + name + "   password: " + password;
 	}
 }
