@@ -9,7 +9,6 @@ function init2(){
 //get account info from form
 function getAccountInfo(){
     let data = {};
-    //data["choiceUUID"] = choiceUUID;
     data["name"] = document.getElementById("username").value;
     data["password"] = document.getElementById("password").value;
     return data;
@@ -28,7 +27,7 @@ function login(){
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if(info["statusCode"] == 200){
-                document.getElementById("choices").classList.toggle('blur');
+                //document.getElementById("choices").classList.toggle('blur');
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("login").remove();
             }
