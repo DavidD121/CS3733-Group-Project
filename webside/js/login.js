@@ -9,7 +9,7 @@ function init2(){
 //get account info from form
 function getAccountInfo(){
     let data = {};
-    data["choiceUUID"] = choiceUUID;
+    //data["choiceUUID"] = choiceUUID;
     data["name"] = document.getElementById("username").value;
     data["password"] = document.getElementById("password").value;
     return data;
