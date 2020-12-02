@@ -29,12 +29,10 @@ import tbd.model.User;
 public class AdminLogin implements RequestHandler<AdminLoginRequest,AdminLoginResponse> {
 
 	LambdaLogger logger;
-	
-	private AmazonS3 s3 = null;
-	
+		
 	Admin getAdmin(String name) throws Exception{
 		try {
-			if (logger != null) { logger.log("in getUser"); }
+			if (logger != null) { logger.log("in getAdmin"); }
 			AdminDAO dao = new AdminDAO();
 			System.out.println("You connected!");
 			Admin admin = dao.getAdminCredentials(name);
@@ -42,7 +40,7 @@ public class AdminLogin implements RequestHandler<AdminLoginRequest,AdminLoginRe
 			return admin;
 		}
 		catch (Exception e) {
-			System.out.println("getUser failed!");
+			System.out.println("getAdmin failed!");
 			return null;
 		}
 	}

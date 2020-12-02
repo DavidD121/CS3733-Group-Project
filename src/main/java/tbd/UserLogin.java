@@ -27,8 +27,6 @@ public class UserLogin implements RequestHandler<LoginUserRequest,LoginUserRespo
 
 	LambdaLogger logger;
 	
-	private AmazonS3 s3 = null;
-	
 	User getUser(String choiceID, String userName, String password) throws Exception{
 		try {
 			if (logger != null) { logger.log("in getUser"); }

@@ -4,20 +4,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 import tbd.model.Choice;
+import tbd.model.ChoiceReportChoice;
 
 public class ChoiceReportResponse {
-	public final List<Choice> choiceList;
+	public final List<ChoiceReportChoice> choiceList;
 	public final int statusCode;
 	public final String error;
 	
-	public ChoiceReportResponse (List<Choice> list, int code) {
+	public ChoiceReportResponse (List<ChoiceReportChoice> list, int code) {
 		this.choiceList = list;
 		this.statusCode = code;
 		this.error = "";
 	}
 	
 	public ChoiceReportResponse (int code, String errorMessage) {
-		this.choiceList = new ArrayList<Choice>();
+		this.choiceList = new ArrayList<ChoiceReportChoice>();
 		this.statusCode = code;
 		this.error = errorMessage;
 	}
