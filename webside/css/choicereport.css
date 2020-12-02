@@ -1,0 +1,55 @@
+body {
+    background-color: #211A1E;
+    align-content: center;
+    text-align: center;
+    font-family: 'Amaranth', sans-serif;
+}
+
+input {
+    width: 100%;
+}
+
+h1 {
+    font-size: 80px;
+}
+
+h1, h2, h3{
+    color: white;
+}
+
+.contentPane h1 {
+    margin: 100px;
+}
+
+.contentPane {
+    margin: 20px auto;
+    width: 80%;
+    height: 130px;
+}
+
+#choices {
+    margin: 20px auto;
+    width: 80%;
+}
+
+.choice {
+    background-color: #5BC0eb;
+    margin: 0 0 30px 0px;
+    padding: 5px;
+    border-radius: 10px;
+
+}
+
+.halfchoice {
+    margin: 5px auto;
+    width: 80%;   
+}
+
+.choice > h2 {
+    margin: 5px;
+}
+
+.choice > h3 {
+    display: inline;
+    margin: 20px;
+}
