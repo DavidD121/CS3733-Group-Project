@@ -6,7 +6,9 @@ import java.util.List;
 
 import tbd.model.Alternative;
 import tbd.model.Choice;
+import tbd.model.ChoiceReportChoice;
 import tbd.model.Constant;
+import tbd.model.User;
 
 public class ChoiceDAO { 
 
@@ -127,5 +129,34 @@ public class ChoiceDAO {
 		return new Choice(uuid, description, isLocked, maxNumbers, alternatives.get(0), alternatives.get(1), alternatives.get(2), alternatives.get(3), alternatives.get(4));
 
     }
+
+	public List<ChoiceReportChoice> getAllChoices() throws Exception {
+		try {
+			List<ChoiceReportChoice> choices = new ArrayList<>();
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + choiceTable + ";");
+            ResultSet resultSet = ps.executeQuery();
+            
+            while (resultSet.next()) {
+                choices.add(generateChoiceReportChoice(resultSet));
+            }
+            resultSet.close();
+            ps.close();
+            
+            return choices;
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting all choices: " + e.getMessage());
+        }
+	}
+
+	private ChoiceReportChoice generateChoiceReportChoice(ResultSet resultSet) throws Exception {
+    	String name = resultSet.getString("description");
+    	String uuid= resultSet.getString("UUID");
+    	String timeCreated = resultSet.getTimestamp("timeCreated") == null ? null : resultSet.getTimestamp("timeCreated").toString();
+    	String timeCompleted= resultSet.getTimestamp("timeCompleted") == null ? null : resultSet.getTimestamp("timeCompleted").toString();
+    
+		return new ChoiceReportChoice(name, uuid, timeCreated, timeCompleted);
+	}
 
 }
