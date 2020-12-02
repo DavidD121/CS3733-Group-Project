@@ -22,7 +22,7 @@ function processChoiceReportResponse(result) {
         console.log("pass");
         for(let i = 0; i < choiceReport["choiceList"].length; i++) {
             let choice = choiceReport["choiceList"][i];
-            add_choice_in_report(choice.name, choice.uuid, choice.dateCreated, choice.dateCompleted);
+            add_choice_in_report(choice.name, choice.uuid, choice.dateCompleted, choice.dateCreated);
             
         }
     } else {
