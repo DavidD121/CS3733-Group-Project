@@ -6,6 +6,8 @@
         <script src="../js/load_choice.js"></script>
         <script src="../js/api.js"></script>
         <script src="../js/login.js"></script>
+        <script src="../js/like_choice.js"></script>
+        <script src="../js/load_alternative.js"></script>
         <link rel="stylesheet" type="text/css" href="../css/choiceviewstyle.css" />
         <link rel="preconnect" href="https://fonts.gstatic.com">
         <link href="https://fonts.googleapis.com/css2?family=Amaranth&display=swap" rel="stylesheet"> 
@@ -36,7 +38,7 @@
             <div class="choice" id="alternative1">
                 <div class="choice-top">
                     <h1 id="alt1-name"></h1>
-                    <button id="approveBtn">
+                    <button id="approveBtn1">
                         <h4>Approve</h4>
                         <img src="../icons/accept.png">
                     </button>
@@ -44,7 +46,7 @@
                     <button id="alt1-like" class="rating ratingSelected">
                         <img src="../icons/like.png">
                         <br>
-                        <h4 id="alt1-likes">5</h4>
+                        <h4 id="alt1-likes" type ="number">5</h4>
                     </button>
                     
                     <button id="alt1-dislike" class="rating">
@@ -57,7 +59,7 @@
                 <div class="addFeedback">
                     <form>
                         <h2>Add Feedback</h2>
-                        <span class="feedbackInput" role="textbox" contenteditable></span>
+                        <span id="alt1-feedback" class="feedbackInput" role="textbox" contenteditable></span>
                         <br>
                         <input type="button" value="submit">
                     </form>
@@ -71,7 +73,7 @@
             <div class="choice" id="alternative2">
                 <div class="choice-top">
                     <h1 id="alt2-name"></h1>
-                    <button id="approveBtn">
+                    <button id="approveBtn2">
                         <h4>Approve</h4>
                         <img src="../icons/accept.png">
                     </button>
@@ -92,7 +94,7 @@
                 <div class="addFeedback">
                     <form>
                         <h2>Add Feedback</h2>
-                        <span class="feedbackInput" role="textbox" contenteditable></span>
+                        <span id="alt2-feedback" class="feedbackInput" role="textbox" contenteditable></span>
                         <br>
                         <input type="button" value="submit">
                     </form>
@@ -105,12 +107,12 @@
             <div class="choice" id="alternative3">
                 <div class="choice-top">
                     <h1 id="alt3-name"></h1>
-                    <button id="approveBtn">
+                    <button id="approveBtn3">
                         <h4>Approve</h4>
                         <img src="../icons/accept.png">
                     </button>
                     <br>
-                    <button id="alt1-like" class="rating ratingSelected">
+                    <button id="alt3-like" class="rating ratingSelected">
                         <img src="../icons/like.png">
                         <br>
                         <h4 id="alt3-likes">5</h4>
@@ -126,7 +128,7 @@
                 <div class="addFeedback">
                     <form>
                         <h2>Add Feedback</h2>
-                        <span class="feedbackInput" role="textbox" contenteditable></span>
+                        <span id="alt3-feedback" class="feedbackInput" role="textbox" contenteditable></span>
                         <br>
                         <input type="button" value="submit">
                     </form>
@@ -139,7 +141,7 @@
             <div class="choice" id="alternative4">
                 <div class="choice-top">
                     <h1 id="alt4-name"></h1>
-                    <button id="approveBtn">
+                    <button id="approveBtn4">
                         <h4>Approve</h4>
                         <img src="../icons/accept.png">
                     </button>
@@ -160,7 +162,7 @@
                 <div class="addFeedback">
                     <form>
                         <h2>Add Feedback</h2>
-                        <span class="feedbackInput" role="textbox" contenteditable></span>
+                        <span id="alt4-feedback" class="feedbackInput" role="textbox" contenteditable></span>
                         <br>
                         <input type="button" value="submit">
                     </form>
@@ -173,7 +175,7 @@
             <div class="choice" id="alternative5">
                 <div class="choice-top">
                     <h1 id="alt5-name"></h1>
-                    <button id="approveBtn">
+                    <button id="approveBtn5">
                         <h4>Approve</h4>
                         <img src="../icons/accept.png">
                     </button>
@@ -194,7 +196,7 @@
                 <div class="addFeedback">
                     <form>
                         <h2>Add Feedback</h2>
-                        <span class="feedbackInput" role="textbox" contenteditable></span>
+                        <span id="alt5-feedback" class="feedbackInput" role="textbox" contenteditable></span>
                         <br>
                         <input type="button" value="submit">
                     </form>

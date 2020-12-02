@@ -29,9 +29,10 @@ function login(){
             if(info["statusCode"] == 200){
                 //document.getElementById("choices").classList.toggle('blur');
                 document.getElementById("header").classList.remove('blur');
+                document.getElementById("choices").classList.remove('blur');
                 document.getElementById("login").remove();
             }
-            else {
+           else {
                 console.log("Invalid Username or Password");
                 document.getElementById("loginError").innerText = "Invalid Username or Password";
 
@@ -52,7 +53,6 @@ function login(){
 function createAccount(){
     let data = getAccountInfo();
     data = JSON.stringify(data);
-    console.log(data);
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/CreateParticipant", true);

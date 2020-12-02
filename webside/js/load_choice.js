@@ -37,7 +37,7 @@ function processChoiceResponse(result) {
         for(let i = 1; i < 6; i++) {
             let alternative = choice["alternative" + i];
             if(alternative != undefined) {
-                document.getElementById("alt" + i + "-name").innerHTML = alternative["name"];
+                loadAlt(alternative, i);
             } else {
                 document.getElementById("alternative" + i).remove();
             }
