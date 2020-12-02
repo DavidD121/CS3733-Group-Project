@@ -1,33 +1,33 @@
 function initialize(){
     const likeBtn1 = document.getElementById("alt1-like");
-    likeBtn1.addEventListener("click", function() { like(1); });
+    likeBtn1.addEventListener("click", function() { like(1); dislike(1)});
 
     const disBtn1 = document.getElementById("alt1-dislike");
-    disBtn1.addEventListener("click", function() { dislike(1); });
+    disBtn1.addEventListener("click", function() { dislike(1); like(1); });
 
     const likeBtn2 = document.getElementById("alt2-like");
-    likeBtn2.addEventListener("click", function() { like(2); });
+    likeBtn2.addEventListener("click", function() { like(2); dislike(2)});
 
     const disBtn2 = document.getElementById("alt2-dislike");
-    disBtn2.addEventListener("click", function() { dislike(2); });
+    disBtn2.addEventListener("click", function() { dislike(2); like(2); });
 
     const likeBtn3 = document.getElementById("alt3-like");
-    likeBtn3.addEventListener("click", function() {like(3);} );
+    likeBtn3.addEventListener("click", function() {like(3); dislike(3)} );
 
     const disBtn3 = document.getElementById("alt3-dislike");
-    disBtn3.addEventListener("click", function() {dislike(3); });
+    disBtn3.addEventListener("click", function() {dislike(3); like(3);});
 
     const likeBtn4 = document.getElementById("alt4-like");
-    likeBtn4.addEventListener("click", function() {like(4); });
+    likeBtn4.addEventListener("click", function() {like(4); dislike(4) });
 
     const disBtn4 = document.getElementById("alt4-dislike");
-    disBtn4.addEventListener("click", function() {dislike(4); });
+    disBtn4.addEventListener("click", function() {dislike(4); like(4);});
 
     const likeBtn5 = document.getElementById("alt5-like");
-    likeBtn5.addEventListener("click", function() {like(5); });
+    likeBtn5.addEventListener("click", function() {like(5); dislike(5) });
 
     const disBtn5 = document.getElementById("alt5-dislike");
-    disBtn5.addEventListener("click", function() {dislike(5); });
+    disBtn5.addEventListener("click", function() {dislike(5); like(5);});
 }
 
 function like(x) {
