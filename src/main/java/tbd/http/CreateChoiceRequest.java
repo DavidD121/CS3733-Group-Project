@@ -29,7 +29,7 @@ public class CreateChoiceRequest {
 	
 	public String getalternative2() { return alternative2; }
 	public void setalternative2(String alternative2) { this.alternative2 = alternative2; }
-	
+		
 	public String getalternative3() { return alternative3; }
 	public void setalternative3(String alternative3) { this.alternative3 = alternative3; }
 	

@@ -17,39 +17,29 @@ import tbd.http.GetChoiceRequest;
 import tbd.http.LoginUserRequest;
 import tbd.http.LoginUserResponse;
 import tbd.http.AddResponse;
+import tbd.http.AdminLoginRequest;
+import tbd.http.AdminLoginResponse;
+import tbd.db.AdminDAO;
 import tbd.db.ConstantsDAO;
-import tbd.db.LoginUserDAO;
+import tbd.model.Admin;
 import tbd.model.Choice;
 import tbd.model.Constant;
 import tbd.model.User;
 
-public class CreateUser implements RequestHandler<LoginUserRequest,LoginUserResponse> {
+public class AdminLogin implements RequestHandler<AdminLoginRequest,AdminLoginResponse> {
 
 	LambdaLogger logger;
 	
 	private AmazonS3 s3 = null;
 	
-
-	/** Load from RDS, if it exists
-	 * 
-	 * @throws Exception 
-	 */
-	
-	User createUser(String choiceID, String userName, String password) throws Exception{
+	Admin getAdmin(String name) throws Exception{
 		try {
-			if (logger != null) { logger.log("in createUser"); }
-			LoginUserDAO dao = new LoginUserDAO();
+			if (logger != null) { logger.log("in getUser"); }
+			AdminDAO dao = new AdminDAO();
 			System.out.println("You connected!");
-			User user = dao.getUser(choiceID, userName);
+			Admin admin = dao.getAdminCredentials(name);
 			
-			//If user doesn't already exist, create new one and return it
-			if(user == null) {
-				if (logger != null) { logger.log("trying to create new user"); }
-				return dao.createNewUser(choiceID, userName, password);
-			} else {
-				//if user exists, return null
-				return null;
-			}
+			return admin;
 		}
 		catch (Exception e) {
 			System.out.println("getUser failed!");
@@ -58,34 +48,47 @@ public class CreateUser implements RequestHandler<LoginUserRequest,LoginUserResp
 	}
 	
 	@Override
-	public LoginUserResponse handleRequest(LoginUserRequest req, Context context) {
-		LoginUserRequest req1 = req;
+	public AdminLoginResponse handleRequest(AdminLoginRequest req, Context context) {
+		AdminLoginRequest req1 = req;
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of RequestHandler");
 		logger.log(req1.toString());
 		boolean fail = false;
 		String failMessage = "";
-		User user = null;
+
+		Admin admin = null;
 		try {
-			user = createUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
-			if (logger != null) { logger.log("New user " + user.getName() + " created"); }
+			admin = getAdmin(req1.getName());
 		} catch (Exception e) {
 			fail = true;
 			failMessage = "Failed to read database!";
 		}
 		
-		if(user == null) {
+		if(admin == null) {
 			fail = true;
-			failMessage = "User already exists";
-		} 
+			failMessage = "Admin credentials incorrect";
+		} else {
+			//Checking password
+			if(admin.getPassword() != null && admin.getPassword().length() != 0) {
+				if(req1.getPassword() == null || req1.getPassword().length() == 0) {
+					fail = true;
+					failMessage = "Password required";
+				} else {
+					if(!req1.getPassword().equals(admin.getPassword())) {
+						fail = true;
+						failMessage = "Incorrect password";
+					}
+				}
+			}
+		}
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		LoginUserResponse response;
+		AdminLoginResponse response;
 		if (fail) {
-			response = new LoginUserResponse(400, failMessage);
+			response = new AdminLoginResponse(400, failMessage);
 		} else {
-			response = new LoginUserResponse(user.getUUID(), 200);  // success
+			response = new AdminLoginResponse(200);  // success
 		}
 
 		System.out.println(response);

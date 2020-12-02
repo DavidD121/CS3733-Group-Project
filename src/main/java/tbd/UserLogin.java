@@ -18,6 +18,7 @@ import tbd.http.LoginUserRequest;
 import tbd.http.LoginUserResponse;
 import tbd.http.AddResponse;
 import tbd.db.ConstantsDAO;
+import tbd.db.LoginUserDAO;
 import tbd.model.Choice;
 import tbd.model.Constant;
 import tbd.model.User;
@@ -31,7 +32,7 @@ public class UserLogin implements RequestHandler<LoginUserRequest,LoginUserRespo
 	User getUser(String choiceID, String userName, String password) throws Exception{
 		try {
 			if (logger != null) { logger.log("in getUser"); }
-			ConstantsDAO dao = new ConstantsDAO();
+			LoginUserDAO dao = new LoginUserDAO();
 			System.out.println("You connected!");
 			User user = dao.getUser(choiceID, userName);
 			
