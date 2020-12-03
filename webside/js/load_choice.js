@@ -33,7 +33,7 @@ function processChoiceResponse(result) {
     } else {
         document.getElementById("choiceUUID").innerHTML = "UUID: " + uuid;
         document.getElementById("choiceDescription").innerHTML = choice["description"];
-    
+        
         for(let i = 1; i < 6; i++) {
             let alternative = choice["alternative" + i];
             if(alternative != undefined) {
@@ -46,6 +46,17 @@ function processChoiceResponse(result) {
     
 }
 
+function setLocked(altIndex) {
+    for(let i = 1; i <= 5; i++) {
+        if(i == altIndex)
+            document.getElementById("alternative" + i).classList.add("approved");
+        else
+            document.getElementById("alternative" + i).classList.add("notapproved");
+    }
+}
+
+
 document.addEventListener("DOMContentLoaded", function() {
     init();
 });
+
