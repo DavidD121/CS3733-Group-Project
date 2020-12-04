@@ -1,3 +1,5 @@
+var userUUID;
+
 function init2(){
     const btn = document.getElementById("loginBtn");
     btn.addEventListener("click", login);
@@ -9,6 +11,7 @@ function init2(){
 //get account info from form
 function getAccountInfo(){
     let data = {};
+
     data["name"] = document.getElementById("username").value;
     data["password"] = document.getElementById("password").value;
     return data;
@@ -18,9 +21,11 @@ function getAccountInfo(){
 function login(){
     let data = getAccountInfo();
     data = JSON.stringify(data);
+    console.log(data);
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/LoginParticipant", true);
+    xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(data);
 
     xhr.onloadend = function () {
@@ -28,6 +33,8 @@ function login(){
             let info = JSON.parse(xhr.responseText);
             if(info["statusCode"] == 200){
                 //document.getElementById("choices").classList.toggle('blur');
+                userUUID = info["result"];
+
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("login").remove();
@@ -56,12 +63,15 @@ function createAccount(){
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/CreateParticipant", true);
+    xhr.setRequestHeader('Content-Type','application/json');
+
     xhr.send(data);
 
     xhr.onloadend = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if(info.statusCode == 200){
+                userUUID = info["result"];
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("login").remove();

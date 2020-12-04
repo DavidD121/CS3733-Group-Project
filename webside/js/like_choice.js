@@ -31,10 +31,14 @@ function initialize(){
 }
 
 function like(x) {
+    let data = {};
+    data["userID"] = userUUID;
+    data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_and_alternative_url + "/" + choiceUUID + "/" + x
         + "/Like", true);
-    xhr.send();
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.send(data);
     xhr.onloadend = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
@@ -67,10 +71,15 @@ function like(x) {
 }
 function dislike(x){
     console.log(x);
+    let data = {};
+    data["userID"] = userUUID;
+    console.log(userUUID);
+    data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_and_alternative_url + "/" + choiceUUID + "/" + x
         + "/Dislike", true);
-    xhr.send();
+    xhr.setRequestHeader('Content-Type','application/json');
+    xhr.send(data);
     xhr.onloadend = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
