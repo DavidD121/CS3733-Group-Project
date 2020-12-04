@@ -59,6 +59,16 @@ body {
     width: 100%;
 }
 
+.approved {
+    border: 5px solid yellow;
+    filter: brightness(100%);
+}
+
+.notapproved {
+    filter: brightness(50%);
+}
+
+
 .choice h1 {
     color: white;
     text-align: center;
@@ -218,6 +228,37 @@ img {
 #watermark {
     position: fixed;
     bottom: 0;
+}
+
+.ratings {
+    display: flex;
+}
+
+.likes {
+    flex-grow: 1;
+}
+
+.dislikes {
+    flex-grow: 1;
+}
+
+ul {
+    padding: 0px;
+    list-style-type: none;
+    color: white;
+    margin: 0px;
+}
+
+.ratings h3 {
+    color: white;
+    margin: 10px 0px 5px 0px;
+    text-decoration: underline;
+}
+
+.ratings h4 {
+    color: white;
+    padding: 0px;
+    margin: 0;
 }
 
 

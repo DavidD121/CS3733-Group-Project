@@ -1,7 +1,6 @@
 function init(){
     const btn = document.getElementById("genChoiceReportBtn");
     btn.addEventListener("click", goToChoiceReport);
-    
 }
 
 function goToChoiceReport() {
