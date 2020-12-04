@@ -21,7 +21,6 @@ function getAccountInfo(){
 function login(){
     let data = getAccountInfo();
     data = JSON.stringify(data);
-    console.log(data);
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/LoginParticipant", true);
@@ -64,7 +63,6 @@ function createAccount(){
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/CreateParticipant", true);
     xhr.setRequestHeader('Content-Type','application/json');
-
     xhr.send(data);
 
     xhr.onloadend = function () {
