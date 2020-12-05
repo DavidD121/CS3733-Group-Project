@@ -51,16 +51,30 @@ function like(x, type) {
                 let likeC = document.getElementById("alt" + x + "-likes");
                 let n1 = parseInt(likeC.innerHTML,10) + parseInt(info["likeChange"],10);
                 likeC.innerHTML = String(n1);
+                updateRatingList(x, parseInt(info["likeChange"],10), "like");
 
                 let disC= document.getElementById("alt" + x + "-dislikes");
                 let n2 = parseInt(disC.innerHTML,10) + parseInt(info["dislikeChange"], 10);
                 disC.innerHTML = String(n2);
+                updateRatingList(x, parseInt(info["dislikeChange"],10), "dislike");
 
             }
         }
     }
 }
 
+function updateRatingList(alt, change, type) {
+    if(change == 1) {
+        create_user_li(document.getElementById("alt" + alt + "-" + type + "s-users"), userName);
+    } else if(change == -1) {
+        let usersList = document.getElementById("alt" + alt + "-" + type + "s-users").getElementsByTagName("li");
+        for(let i = 0; i < usersList.length; i++) {
+            if(usersList[i].innerHTML == userName) {
+                usersList[i].remove();
+            }
+        }
+    }
+}
 
 document.addEventListener("DOMContentLoaded", function() {
     initialize();

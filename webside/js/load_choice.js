@@ -33,7 +33,7 @@ function processChoiceResponse(result) {
     } else {
         document.getElementById("choiceUUID").innerHTML = "UUID: " + uuid;
         document.getElementById("choiceDescription").innerHTML = choice["description"];
-        
+        console.log(choice);
         for(let i = 1; i < 6; i++) {
             let alternative = choice["alternative" + i];
             if(alternative != undefined) {
