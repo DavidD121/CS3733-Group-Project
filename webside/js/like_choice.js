@@ -66,6 +66,7 @@ function like(x, type) {
 function updateRatingList(alt, change, type) {
     if(change == 1) {
         create_user_li(document.getElementById("alt" + alt + "-" + type + "s-users"), userName);
+        document.getElementById("alt" + alt + "-" + type).classList.add("ratingSelected");
     } else if(change == -1) {
         let usersList = document.getElementById("alt" + alt + "-" + type + "s-users").getElementsByTagName("li");
         for(let i = 0; i < usersList.length; i++) {
@@ -73,6 +74,7 @@ function updateRatingList(alt, change, type) {
                 usersList[i].remove();
             }
         }
+        document.getElementById("alt" + alt + "-" + type).classList.remove("ratingSelected");
     }
 }
 

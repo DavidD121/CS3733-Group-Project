@@ -40,6 +40,7 @@ function login(){
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("login").remove();
+                load_user_selected_ratings();
             }
            else {
                 console.log("Invalid Username or Password");

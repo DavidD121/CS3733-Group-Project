@@ -1,4 +1,5 @@
 var choiceUUID;
+var totalAlternatives;
 
 function init() {
     selectChoice();
@@ -38,6 +39,7 @@ function processChoiceResponse(result) {
             let alternative = choice["alternative" + i];
             if(alternative != undefined) {
                 loadAlt(alternative, i);
+                totalAlternatives = i;
             } else {
                 document.getElementById("alternative" + i).remove();
             }

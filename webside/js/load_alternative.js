@@ -20,6 +20,22 @@ function load_users_rating(base_element, users) {
     });
 }
 
+function load_user_selected_ratings() {
+    for(let i = 1; i <= totalAlternatives; i++) {
+        load_user_selected_alt_rating(i, "like");
+        load_user_selected_alt_rating(i, "dislike");
+    }
+}
+
+function load_user_selected_alt_rating(alt, type) {
+    let usersList = document.getElementById("alt" + alt + "-" + type + "s-users").getElementsByTagName("li");
+        for(let i = 0; i < usersList.length; i++) {
+            if(usersList[i].innerHTML == userName) {
+                 document.getElementById("alt" + alt + "-" + type).classList.add("ratingSelected");
+            }
+        }
+}
+
 function create_user_li(baseElement, userName) {
     let element = document.createElement("li");
     element.innerHTML = userName;
