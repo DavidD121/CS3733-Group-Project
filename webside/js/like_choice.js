@@ -1,33 +1,33 @@
 function initialize(){
     const likeBtn1 = document.getElementById("alt1-like");
-    likeBtn1.addEventListener("click", function() { like(1, "like"); /*dislike(1)*/});
+    likeBtn1.addEventListener("click", function() { like(1, "like"); });
 
     const disBtn1 = document.getElementById("alt1-dislike");
-    disBtn1.addEventListener("click", function() {/* dislike(1); */like(1, "dislike"); });
+    disBtn1.addEventListener("click", function() {like(1, "dislike"); });
 
     const likeBtn2 = document.getElementById("alt2-like");
-    likeBtn2.addEventListener("click", function() { like(2, "like");/* dislike(2)*/});
+    likeBtn2.addEventListener("click", function() { like(2, "like");});
 
     const disBtn2 = document.getElementById("alt2-dislike");
-    disBtn2.addEventListener("click", function() { /*dislike(2); */like(2, "dislike"); });
+    disBtn2.addEventListener("click", function() {  like(2, "dislike"); });
 
     const likeBtn3 = document.getElementById("alt3-like");
-    likeBtn3.addEventListener("click", function() {like(3, "like");/* dislike(3)*/} );
+    likeBtn3.addEventListener("click", function() {like(3, "like");} );
 
     const disBtn3 = document.getElementById("alt3-dislike");
-    disBtn3.addEventListener("click", function() {/*dislike(3); */like(3,"dislike");});
+    disBtn3.addEventListener("click", function() {like(3,"dislike");});
 
     const likeBtn4 = document.getElementById("alt4-like");
-    likeBtn4.addEventListener("click", function() {like(4, "like"); /*dislike(4) */});
+    likeBtn4.addEventListener("click", function() {like(4, "like"); });
 
     const disBtn4 = document.getElementById("alt4-dislike");
-    disBtn4.addEventListener("click", function() {/*dislike(4);*/ like(4,"dislike");});
+    disBtn4.addEventListener("click", function() { like(4,"dislike");});
 
     const likeBtn5 = document.getElementById("alt5-like");
-    likeBtn5.addEventListener("click", function() {like(5,"like"); /* dislike(5) */});
+    likeBtn5.addEventListener("click", function() {like(5,"like"); });
 
     const disBtn5 = document.getElementById("alt5-dislike");
-    disBtn5.addEventListener("click", function() {/*dislike(5); */ like(5,"dislike");});
+    disBtn5.addEventListener("click", function() { like(5,"dislike");});
 }
 
 function like(x, type) {
@@ -43,7 +43,7 @@ function like(x, type) {
     console.log(type);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(data);
-    console.log(JSON.parse(xhr.responseText));
+
 
 
     xhr.onloadend = function () {
@@ -54,11 +54,11 @@ function like(x, type) {
                 console.log(info);
                 let likeC = document.getElementById("alt" + x + "-likes");
                 let n1 = parseInt(likeC.innerHTML,10) + parseInt(info["likeChange"],10);
-                likeC.innerHTML = n1;
+                likeC.innerHTML = String(n1);
 
                 let disC= document.getElementById("alt" + x + "-dislikes");
                 let n2 = parseInt(disC.innerHTML,10) + parseInt(info["dislikeChang"], 10);
-                disC.innerHTML = n2;
+                disC.innerHTML = String(n2);
 
             }
             console.log(info);
@@ -67,48 +67,6 @@ function like(x, type) {
     }
     console.log(x);
 }
-/*
-function dislike(x){
-    console.log(x);
-    let data = {};
-    data["userID"] = userUUID;
-    data["type"] = "dislike";
-    console.log(userUUID);
-    data = JSON.stringify(data);
-    console.log(data);
-
-    let xhr = new XMLHttpRequest();
-    xhr.open("POST", choice_and_alternative_url + "/" + choiceUUID + "/" + x
-        + "/Dislike", true);
-    xhr.setRequestHeader('Content-Type','application/json');
-    xhr.send(data);
-    xhr.onloadend = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
-            let info = JSON.parse(xhr.responseText);
-            console.log(info);
-            if(info["statusCode"] == 200){
-                switch(info["dislikeChange"]){
-                    case 1:
-                        let disUP = document.getElementById("alt" + x + "-dislikes");
-                        let n1 = parseInt(disUP.innerHTML,10) + 1;
-                        disUP.innerHTML = n1;
-                        break;
-                    case 0:
-                        break;
-                    case -1:
-                        let disDOWN = document.getElementById("alt" + x + "-dislikes");
-                        let n2 = (disDOWN.innerHTML) - 1;
-                        disDOWN.innerHTML = n2;
-                        break;
-                    default:
-                        break;
-                }
-            }
-            console.log(info);
-            console.log(x);
-        }
-    }
-} */
 
 
 document.addEventListener("DOMContentLoaded", function() {
