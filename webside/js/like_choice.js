@@ -35,12 +35,10 @@ function like(x, type) {
     data["userID"] = userUUID;
     data["type"] = type;
     data = JSON.stringify(data);
-    console.log(data);
     let xhr = new XMLHttpRequest();
     type = type.charAt(0).toUpperCase() + type.slice(1);
     xhr.open("POST", choice_and_alternative_url + "/" + choiceUUID + "/" + x
         + "/" + type, true);
-    console.log(type);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(data);
 
@@ -49,23 +47,18 @@ function like(x, type) {
     xhr.onloadend = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
-            console.log(info);
             if(info["statusCode"] == 200){
-                console.log(info);
                 let likeC = document.getElementById("alt" + x + "-likes");
                 let n1 = parseInt(likeC.innerHTML,10) + parseInt(info["likeChange"],10);
                 likeC.innerHTML = String(n1);
 
                 let disC= document.getElementById("alt" + x + "-dislikes");
-                let n2 = parseInt(disC.innerHTML,10) + parseInt(info["dislikeChang"], 10);
+                let n2 = parseInt(disC.innerHTML,10) + parseInt(info["dislikeChange"], 10);
                 disC.innerHTML = String(n2);
 
             }
-            console.log(info);
-            console.log(x);
         }
     }
-    console.log(x);
 }
 
 

@@ -1,4 +1,5 @@
 var userUUID;
+var userName;
 
 function init2(){
     const btn = document.getElementById("loginBtn");
@@ -20,6 +21,7 @@ function getAccountInfo(){
 //login to existing account
 function login(){
     let data = getAccountInfo();
+    let name = data["name"];
     data = JSON.stringify(data);
 
     let xhr = new XMLHttpRequest();
@@ -33,6 +35,7 @@ function login(){
             if(info["statusCode"] == 200){
                 //document.getElementById("choices").classList.toggle('blur');
                 userUUID = info["result"];
+                userName = name;
 
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("choices").classList.remove('blur');
@@ -58,18 +61,20 @@ function login(){
 //create a new account
 function createAccount(){
     let data = getAccountInfo();
+    let name = data["name"];
     data = JSON.stringify(data);
 
     let xhr = new XMLHttpRequest();
     xhr.open("POST", choice_complete_url + "/" + choiceUUID + "/CreateParticipant", true);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(data);
-
+    console.log(data);
     xhr.onloadend = function () {
-        if (xhr.readyState == XMLHttpRequest.DONE) {
+        if (xhr.readyState === XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
-            if(info.statusCode == 200){
+            if(info.statusCode === 200){
                 userUUID = info["result"];
+                userName = name;
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("login").remove();
