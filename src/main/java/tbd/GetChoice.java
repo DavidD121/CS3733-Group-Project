@@ -15,7 +15,6 @@ import tbd.http.GetChoiceResponse;
 import tbd.http.GetChoiceRequest;
 import tbd.http.CreateChoiceResponse;
 import tbd.db.ChoiceDAO;
-import tbd.db.GetChoiceDAO;
 import tbd.model.Choice;
 import tbd.model.Constant;
 
@@ -29,7 +28,7 @@ public class GetChoice implements RequestHandler<GetChoiceRequest,GetChoiceRespo
 	Choice getChoice(String choiceName) throws Exception{
 		try {
 		if (logger != null) { logger.log("in createChoice"); }
-		GetChoiceDAO dao = new GetChoiceDAO();
+		ChoiceDAO dao = new ChoiceDAO();
 		System.out.println("You connected!");
 		//dao.addConstant(new Constant("internetblake", 12));
 		Choice choice = dao.getChoice(choiceName);

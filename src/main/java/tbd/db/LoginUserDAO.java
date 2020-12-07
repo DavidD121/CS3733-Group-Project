@@ -37,7 +37,7 @@ public class LoginUserDAO {
         
         try {
             User user = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM" + tblName + " WHERE choiceID=? and name=?;");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choiceID=? and name=?;");
             ps.setString(1, choiceUUID);
             ps.setString(2, name);
             ResultSet resultSet = ps.executeQuery();

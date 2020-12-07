@@ -6,13 +6,6 @@ public class User {
 	String choiceUUID;
 	String name;
 	String password;
-	
-	public User(String u, String c, String n) {
-		this.uuid = u;
-		this.choiceUUID = c;
-		this.name = n;
-		this.password = null;
-	}
 
 	public User(String u, String c, String n, String p) {
 		this.uuid = u;
