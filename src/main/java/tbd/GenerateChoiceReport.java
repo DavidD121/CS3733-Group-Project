@@ -1,6 +1,6 @@
 package tbd;
 
-import java.util.List;
+import java.util.List; 
 
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
@@ -8,7 +8,6 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import tbd.db.AdminDAO;
 import tbd.db.ChoiceDAO;
-import tbd.http.AdminLoginResponse;
 import tbd.http.ChoiceReportResponse;
 import tbd.model.Admin;
 import tbd.model.Choice;

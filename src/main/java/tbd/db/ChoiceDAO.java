@@ -1,6 +1,8 @@
 package tbd.db;
 
 import java.sql.*;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -25,6 +27,26 @@ public class ChoiceDAO {
     	} catch (Exception e) {
     		System.out.println("Failed to connect");
     		conn = null;
+    	}
+    }
+    
+    public boolean closeChoice(String uuid) throws Exception {
+    	try {
+    		
+            PreparedStatement ps = conn.prepareStatement("update ChoiceTable SET isLocked = 1, timeCompleted = ? where (UUID = ?);");
+
+            //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+            LocalDateTime now = LocalDateTime.now();
+            Timestamp timestamp = Timestamp.valueOf(now);
+            ps.setTimestamp(1, timestamp);
+            ps.setString(2, uuid);
+            ps.executeUpdate();
+            
+            ps.close();
+    		return true;
+    	} catch (Exception e) {
+    		e.printStackTrace();
+            throw new Exception("Failed in closing choice: " + e.getMessage());
     	}
     }
 

@@ -1,6 +1,6 @@
 package tbd;
 
-import java.util.Scanner;
+import java.util.Scanner; 
 import java.util.UUID;
 
 import com.amazonaws.regions.Regions;
@@ -18,7 +18,7 @@ import tbd.http.LoginUserRequest;
 import tbd.http.LoginUserResponse;
 import tbd.http.AddResponse;
 import tbd.http.AdminLoginRequest;
-import tbd.http.AdminLoginResponse;
+import tbd.http.GenericResponse;
 import tbd.db.AdminDAO;
 import tbd.db.ConstantsDAO;
 import tbd.model.Admin;
@@ -26,7 +26,7 @@ import tbd.model.Choice;
 import tbd.model.Constant;
 import tbd.model.User;
 
-public class AdminLogin implements RequestHandler<AdminLoginRequest,AdminLoginResponse> {
+public class AdminLogin implements RequestHandler<AdminLoginRequest,GenericResponse> {
 
 	LambdaLogger logger;
 		
@@ -46,7 +46,7 @@ public class AdminLogin implements RequestHandler<AdminLoginRequest,AdminLoginRe
 	}
 	
 	@Override
-	public AdminLoginResponse handleRequest(AdminLoginRequest req, Context context) {
+	public GenericResponse handleRequest(AdminLoginRequest req, Context context) {
 		AdminLoginRequest req1 = req;
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of RequestHandler");
@@ -82,11 +82,11 @@ public class AdminLogin implements RequestHandler<AdminLoginRequest,AdminLoginRe
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		AdminLoginResponse response;
+		GenericResponse response;
 		if (fail) {
-			response = new AdminLoginResponse(400, failMessage);
+			response = new GenericResponse(400, failMessage);
 		} else {
-			response = new AdminLoginResponse(200);  // success
+			response = new GenericResponse(200);  // success
 		}
 
 		System.out.println(response);

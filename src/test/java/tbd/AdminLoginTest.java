@@ -1,6 +1,6 @@
 package tbd;
 
-import java.io.IOException;
+import java.io.IOException; 
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -9,7 +9,7 @@ import org.junit.Test;
 import com.amazonaws.services.lambda.runtime.Context;
 
 import tbd.http.AdminLoginRequest;
-import tbd.http.AdminLoginResponse;
+import tbd.http.GenericResponse;
 import tbd.http.LoginUserRequest;
 import tbd.http.LoginUserResponse;
 
@@ -41,7 +41,7 @@ public class AdminLoginTest {
         Context ctx = createContext();
 
         AdminLoginRequest request = new AdminLoginRequest("admin", "password");
-        AdminLoginResponse output = handler.handleRequest(request, ctx);
+        GenericResponse output = handler.handleRequest(request, ctx);
 
         // TODO: validate output here if needed.
         Assert.assertEquals(200, output.statusCode);
@@ -53,7 +53,7 @@ public class AdminLoginTest {
         Context ctx = createContext();
 
         AdminLoginRequest request = new AdminLoginRequest("bumbleton", "password");
-        AdminLoginResponse output = handler.handleRequest(request, ctx);
+        GenericResponse output = handler.handleRequest(request, ctx);
 
         // TODO: validate output here if needed.
         Assert.assertEquals(400, output.statusCode);
@@ -65,7 +65,7 @@ public class AdminLoginTest {
         Context ctx = createContext();
 
         AdminLoginRequest request = new AdminLoginRequest("admin", "buh");
-        AdminLoginResponse output = handler.handleRequest(request, ctx);
+        GenericResponse output = handler.handleRequest(request, ctx);
 
         // TODO: validate output here if needed.
         Assert.assertEquals(400, output.statusCode);

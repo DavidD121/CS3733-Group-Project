@@ -37,8 +37,10 @@ function addFeedback(alt){
                 console.log(info);
                 let name = userName;
                 let time = info["timeCreated"];
-
-
+                let feedbackContainer = document.getElementById("alt" + alt + "-feedback-container");
+    
+                let feedbackElem = createFeedbackElement(name, time, feedback);
+                feedbackContainer.appendChild(feedbackElem);
             }
 
         }
