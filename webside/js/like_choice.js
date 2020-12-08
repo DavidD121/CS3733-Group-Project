@@ -36,34 +36,28 @@ function like(x, type) {
     data["type"] = type;
     data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
-    type = type.charAt(0).toUpperCase() + type.slice(1);
+    let type_url = type.charAt(0).toUpperCase() + type.slice(1);
     xhr.open("POST", choice_and_alternative_url + "/" + choiceUUID + "/" + x
-        + "/" + type, true);
+        + "/" + type_url, true);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(data);
-
 
 
     xhr.onloadend = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if(info["statusCode"] == 200){
-                let likeC = document.getElementById("alt" + x + "-likes");
-                let n1 = parseInt(likeC.innerHTML,10) + parseInt(info["likeChange"],10);
-                likeC.innerHTML = String(n1);
-                updateRatingList(x, parseInt(info["likeChange"],10), "like");
-
-                let disC= document.getElementById("alt" + x + "-dislikes");
-                let n2 = parseInt(disC.innerHTML,10) + parseInt(info["dislikeChange"], 10);
-                disC.innerHTML = String(n2);
-                updateRatingList(x, parseInt(info["dislikeChange"],10), "dislike");
-
+                updateRating(x, parseInt(info["likeChange"],10), "like");
+                updateRating(x, parseInt(info["dislikeChange"],10), "dislike");
             }
         }
     }
 }
+function updateRating(alt, change, type){
+    let doc = document.getElementById("alt" + alt + "-"+ type + "s");
+    let n1 = parseInt(doc.innerHTML,10) + change;
+    doc.innerHTML = String(n1);
 
-function updateRatingList(alt, change, type) {
     if(change == 1) {
         create_user_li(document.getElementById("alt" + alt + "-" + type + "s-users"), userName);
         document.getElementById("alt" + alt + "-" + type).classList.add("ratingSelected");
