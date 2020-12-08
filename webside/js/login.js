@@ -63,10 +63,7 @@ function createAccount(){
         if (xhr.readyState === XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if(info.statusCode === 200){
-
                 updateUI(info["result"], name);
-
-
             }
             else {
                 console.log(info["error"]);
