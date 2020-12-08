@@ -1,16 +1,16 @@
 package tbd.http;
 
+public class GenericResponse {
 
-public class AdminLoginResponse {
 	public int statusCode;
 	public String error;
 	
-	public AdminLoginResponse (int statusCode) {
+	public GenericResponse(int statusCode) {
 		this.statusCode = statusCode;
 		this.error = "";
 	}
 	
-	public AdminLoginResponse (int statusCode, String errorMessage) {
+	public GenericResponse(int statusCode, String errorMessage) {
 		this.statusCode = statusCode;
 		this.error = errorMessage;
 	}
@@ -22,5 +22,4 @@ public class AdminLoginResponse {
 			return "ErrorResult(" + statusCode + ", err=" + error + ")";
 		}
 	}
-
 }
