@@ -33,9 +33,7 @@ function login(){
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if(info["statusCode"] == 200){
-
                 updateUI(info["result"], name);
-
                 load_user_selected_ratings();
             }
            else {
@@ -89,7 +87,7 @@ function updateUI(id, name){
     document.getElementById("header").classList.remove('blur');
     document.getElementById("choices").classList.remove('blur');
     document.getElementById("login").remove();
-      document.getElementById("choiceParticipant").innerHTML = "Participant: " + name;
+    document.getElementById("choiceParticipant").innerHTML = "Participant: " + name;
 }
 
 document.addEventListener("DOMContentLoaded", function() {
