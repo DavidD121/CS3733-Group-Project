@@ -1,8 +1,18 @@
 var choiceUUID;
-var totalAlternatives;
+var totalAlternatives = 5;
 
 function init() {
     selectChoice();
+    reload();
+}
+
+function reload() {
+   const btn = document.getElementById("pageReload");
+    
+    btn.addEventListener("click", function() {
+        selectChoice();
+        console.log("reload");
+    });
 }
 
 function selectChoice() {
@@ -35,7 +45,8 @@ function processChoiceResponse(result) {
         document.getElementById("choiceUUID").innerHTML = "UUID: " + uuid;
         document.getElementById("choiceDescription").innerHTML = choice["description"];
         console.log(choice);
-        for(let i = 1; i < 6; i++) {
+        let t = totalAlternatives;
+        for(let i = 1; i <= t; i++) {
             let alternative = choice["alternative" + i];
             if(alternative != undefined) {
                 loadAlt(alternative, i);

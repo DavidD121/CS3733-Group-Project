@@ -40,6 +40,7 @@ function login(){
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("login").remove();
+                document.getElementById("choiceParticipant").innerHTML = "Participant: " + name;
                 load_user_selected_ratings();
             }
            else {
@@ -79,6 +80,7 @@ function createAccount(){
                 document.getElementById("choices").classList.remove('blur');
                 document.getElementById("header").classList.remove('blur');
                 document.getElementById("login").remove();
+                document.getElementById("choiceParticipant").innerHTML = "Participant: " + name;
             }
             else {
                 console.log(info["error"]);
