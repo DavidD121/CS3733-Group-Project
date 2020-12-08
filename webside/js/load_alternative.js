@@ -54,6 +54,38 @@ function loadAlt(alt, i){
     document.getElementById("alt" + i + "-name").innerHTML = alt["name"];
     loadLikes(alt, i);
     loadDislikes(alt, i);
-   // loadFeedback(alt, i);
+    loadFeedback(alt, i);
     //loadApproval(alt, i);
+}
+
+function loadFeedback (alt, i) {
+    let feedbackContainer = document.getElementById("alt" + i + "-feedback-container");
+    alt["listOfFeedback"].forEach(function(feedback) {
+        let feedbackElem = createFeedbackElement(feedback["author"], feedback["timeCreated"], feedback["description"]);
+        feedbackContainer.appendChild(feedbackElem);
+    })
+
+}
+ 
+function createFeedbackElement(author, timeStamp, description) {
+    let feedbackElem = document.createElement("div");
+    
+    feedbackElem.classList.add("userFeedback");
+    
+    let authorElem = document.createElement("h4");
+    authorElem.innerHTML = author;
+    authorElem.classList.add("feedbackAuthor");
+    
+    let timeStampElem = document.createElement("h4");
+    timeStampElem.innerHTML = timeStamp;
+    timeStampElem.classList.add("feedbackTime");
+    
+    let descriptionElem = document.createElement("h5");
+    descriptionElem.innerHTML = description;
+    descriptionElem.classList.add("feedbackDesc")
+    feedbackElem.appendChild(authorElem);
+    feedbackElem.appendChild(timeStampElem);
+    feedbackElem.appendChild(descriptionElem);
+    
+    return feedbackElem;
 }

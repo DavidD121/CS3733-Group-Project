@@ -114,17 +114,28 @@ input {
 }
 
 
-.feedbackName {
+.feedbackAuthor {
+    margin: 0px;
     float: left;
 }
 
 .feedbackTime {
-    float: right;
+    margin: 0px;
+    float: right; 
+    padding-left: 5px;
 }
 
-.test {
-    padding-bottom: 35px;
-    margin: 0px 10px;
+.userFeedback {
+    padding: 5px;
+    margin: 10px 10px;
+    background-color: white;
+    border-radius: 10px;
+}
+
+.feedbackDesc {
+    display: inline-block;
+    margin: 5px 0px 0px 0px;
+    width: 100%;
 }
 
 #login {
