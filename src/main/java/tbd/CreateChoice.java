@@ -12,7 +12,6 @@ import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 import com.amazonaws.services.s3.model.S3Object;
 import com.amazonaws.services.s3.model.S3ObjectInputStream;
 
-import tbd.http.AddResponse;
 import tbd.http.CreateChoiceRequest;
 import tbd.http.CreateChoiceResponse;
 import tbd.db.ChoiceDAO;
@@ -40,7 +39,7 @@ public class CreateChoice implements RequestHandler<CreateChoiceRequest,CreateCh
 		System.out.println("You connected!");
 		System.out.println("Alt 5: ");
 		System.out.println(alternative5);
-		dao.addChoice(new Choice(choiceName, choiceDescription, 1, maxUsers, alternative1, alternative2, alternative3, alternative4, alternative5));
+		dao.addChoice(new Choice(choiceName, choiceDescription, 0, maxUsers, alternative1, alternative2, alternative3, alternative4, alternative5));
 
 		return false;
 		}
