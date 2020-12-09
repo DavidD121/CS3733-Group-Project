@@ -52,11 +52,30 @@ function loadApproval(alt, i){
 
 function loadAlt(alt, i){
     document.getElementById("alt" + i + "-name").innerHTML = alt["name"];
+    clearAlt(i);
     loadLikes(alt, i);
     loadDislikes(alt, i);
     loadFeedback(alt, i);
     //loadApproval(alt, i);
 }
+
+function clearAlt(i) {
+    //Clearing Feedback
+     removeChildrenNodes(document.getElementById("alt" + i + "-feedback-container"));
+    
+    //Clearing likes
+    removeChildrenNodes(document.getElementById("alt" + i + "-likes-users"));
+    
+    //Clearing dislikes
+    removeChildrenNodes(document.getElementById("alt" + i + "-dislikes-users"));
+
+}
+
+function removeChildrenNodes(parent) {
+    while(parent.firstChild) {
+        parent.removeChild(parent.firstChild);
+    }
+} 
 
 function loadFeedback (alt, i) {
     let feedbackContainer = document.getElementById("alt" + i + "-feedback-container");

@@ -10,8 +10,7 @@ function reload() {
    const btn = document.getElementById("pageReload");
     
     btn.addEventListener("click", function() {
-        selectChoice();
-        console.log("reload");
+        getChoiceInfo();
     });
 }
 
@@ -44,7 +43,6 @@ function processChoiceResponse(result) {
     } else {
         document.getElementById("choiceUUID").innerHTML = "UUID: " + uuid;
         document.getElementById("choiceDescription").innerHTML = choice["description"];
-        console.log(choice);
         let t = totalAlternatives;
         for(let i = 1; i <= t; i++) {
             let alternative = choice["alternative" + i];
