@@ -10,6 +10,7 @@ import java.util.List;
 import tbd.model.Alternative;
 import tbd.model.Choice;
 import tbd.model.Constant;
+import tbd.model.Feedback;
 
 public class GetChoiceDAO { 
 
@@ -20,6 +21,7 @@ public class GetChoiceDAO {
 	final String alternativeTable = "AlternativeTable";
 	final String rateAlternativeTable = "UserRateAlternativeTable";
 	final String userTable = "UserTable";
+	final String feedbackTable = "FeedbackTable";
 
 	public GetChoiceDAO() {
     	try  {
@@ -120,12 +122,36 @@ public class GetChoiceDAO {
     		return names;
         	
     }
-    
-    
-    
+ 
    
+    private Feedback generateFeedback(ResultSet resultSet) throws Exception{    	
+    	String name = resultSet.getString("user");
+    	String feedback = resultSet.getString("description");
+    	Timestamp timestamp = resultSet.getTimestamp("timeCreated");
+    	return new Feedback(name, timestamp, feedback);
+    }
     
-   
+    public ArrayList<Feedback> getFeedbackArray(int alternativeID, String choiceID) throws Exception{
+        ArrayList<Feedback> feedback = new ArrayList<Feedback>();
+    	try {
+            PreparedStatement psAlternative = conn.prepareStatement("SELECT * FROM " + feedbackTable + " WHERE choiceID=? and alternativeID=?;");
+            psAlternative.setString(1, choiceID);
+            psAlternative.setInt(2, alternativeID);
+            ResultSet resultSetAlternative = psAlternative.executeQuery();
+            while (resultSetAlternative.next()) {
+            	Feedback f = generateFeedback(resultSetAlternative);
+                //System.out.println("getLikeAlternativeNames:" + name);
+                feedback.add(f);
+                System.out.println("Added feedback from read" + feedback.size() + " " + f.author + " " + f.description);
+            }    
+    		return feedback;
+        } catch (Exception e) {
+            System.out.println("Failed to getName!");
+            return new ArrayList<Feedback>();
+        }
+        	
+    }
+    
 
     // generates a list of alternatives to be used in generateChoice.
     private String generateAlternative(ResultSet resultSet) throws Exception{
@@ -138,7 +164,11 @@ public class GetChoiceDAO {
     // generates a list of alternatives to be used in generateChoice.
     private Alternative generateAlternativeObject(ResultSet resultSet) throws Exception{
     	ArrayList<String> alternatives = new ArrayList<String>();
-    	Alternative a = new Alternative(resultSet.getString("name"), resultSet.getString("choiceID"), resultSet.getInt("likes"), resultSet.getInt("dislikes"), getLikeAlternativeNames(resultSet.getInt("AlternativeID"), resultSet.getString("choiceID")), getDislikeAlternativeNames(resultSet.getInt("AlternativeID"), resultSet.getString("choiceID")),resultSet.getString("feedback"));
+    	ArrayList<Feedback> feedback = getFeedbackArray(resultSet.getInt("AlternativeID"), resultSet.getString("choiceID"));
+    	System.out.println("Here is the feedback array's size: " + feedback.size());
+    	Alternative a = new Alternative(resultSet.getString("name"), resultSet.getString("choiceID"), resultSet.getInt("likes"), resultSet.getInt("dislikes"), getLikeAlternativeNames(resultSet.getInt("AlternativeID"), resultSet.getString("choiceID")), getDislikeAlternativeNames(resultSet.getInt("AlternativeID"), resultSet.getString("choiceID")), feedback);
+
+
     	return a;
     }
     
