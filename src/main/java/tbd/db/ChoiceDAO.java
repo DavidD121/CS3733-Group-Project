@@ -42,12 +42,12 @@ public class ChoiceDAO {
 
     }
     
-    public boolean closeChoice(String uuid) throws Exception {
+    public boolean closeChoice(String uuid, int index) throws Exception {
     	try {
     		
-            PreparedStatement ps = conn.prepareStatement("update ChoiceTable SET isLocked = 1, timeCompleted = now() where (UUID = ?);");
-
-            ps.setString(1, uuid);
+            PreparedStatement ps = conn.prepareStatement("update ChoiceTable SET approvedAlternative = ?, timeCompleted = now() where (UUID = ?);");
+            ps.setInt(1, index);
+            ps.setString(2, uuid);
             ps.executeUpdate();
             
             ps.close();

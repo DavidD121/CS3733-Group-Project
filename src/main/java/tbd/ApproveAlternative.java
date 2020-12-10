@@ -13,10 +13,10 @@ public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequ
 
 	LambdaLogger logger;
 	
-	boolean closeChoice(String uuid) throws Exception {
+	boolean closeChoice(String uuid, int index) throws Exception {
 		try {
 			ChoiceDAO dao = new ChoiceDAO();
-			dao.closeChoice(uuid);
+			dao.closeChoice(uuid,index);
 			return true;
 		} catch (Exception e) {
 			System.out.println("closeChoice failed!");
@@ -35,7 +35,7 @@ public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequ
 		String failMessage = "";
 		
 		try {
-			fail = !closeChoice(req1.getChoiceID());
+			fail = !closeChoice(req1.getChoiceID(), req1.getIndex());
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
