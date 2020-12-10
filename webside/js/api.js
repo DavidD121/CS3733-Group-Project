@@ -9,3 +9,4 @@ var choice_get_url = base_url + "Choice";               // GET with {choiceUUID}
 var choice_complete_url = base_url + "Choice";          // POST with {choiceUUID}
 var choice_and_alternative_url = base_url + "Choice";   // POST with {choiceUUID} and {alternativeIndex}
 var admin_get_choicereport = base_url + "Admin/ChoiceReport";
+var admin_delete_choices = base_url + "Admin/Delete/";
