@@ -43,12 +43,28 @@ public class CreateUserTest {
         UUID uuid = UUID.randomUUID();
 		String name = uuid.toString().substring(0, 10);
 		
-        LoginUserRequest request = new LoginUserRequest("c7d7c", name, "");
+        LoginUserRequest request = new LoginUserRequest("1824h", name, "");
         LoginUserResponse output = handler.handleRequest(request, ctx);
 
         Assert.assertEquals(200, output.statusCode);
         Assert.assertEquals(5, output.result.length());
     }
+    
+    @Test
+    public void testCreateUserInFullChoice() {
+    	CreateUser handler = new CreateUser();
+        Context ctx = createContext();
+        
+        UUID uuid = UUID.randomUUID();
+		String name = uuid.toString().substring(0, 10);
+		
+        LoginUserRequest request = new LoginUserRequest("c7d7c", name, "");
+        LoginUserResponse output = handler.handleRequest(request, ctx);
+
+        Assert.assertEquals(400, output.statusCode);
+        Assert.assertEquals("Choice is full", output.error);
+    }
+
     
     @Test
     public void testCreateExistingUser() {
@@ -59,5 +75,7 @@ public class CreateUserTest {
         LoginUserResponse output = handler.handleRequest(request, ctx);
 
         Assert.assertEquals(400, output.statusCode);
+        Assert.assertEquals("User already exists", output.error);
+
     }
 }

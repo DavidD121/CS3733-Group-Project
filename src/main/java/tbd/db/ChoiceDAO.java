@@ -24,22 +24,30 @@ public class ChoiceDAO {
     	try  {
     		conn = DatabaseUtil.connect();
     		System.out.println("Connected to database!");
+    		setTimeZone();
     	} catch (Exception e) {
     		System.out.println("Failed to connect");
     		conn = null;
     	}
     }
     
+    public void setTimeZone() throws Exception {
+        try {
+        	PreparedStatement ps = conn.prepareStatement("SET time_zone = \"-5:00\";");
+        	ps.execute();
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed to set timezone: " + e.getMessage());
+        }
+
+    }
+    
     public boolean closeChoice(String uuid) throws Exception {
     	try {
     		
-            PreparedStatement ps = conn.prepareStatement("update ChoiceTable SET isLocked = 1, timeCompleted = ? where (UUID = ?);");
+            PreparedStatement ps = conn.prepareStatement("update ChoiceTable SET isLocked = 1, timeCompleted = now() where (UUID = ?);");
 
-            //DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            LocalDateTime now = LocalDateTime.now();
-            Timestamp timestamp = Timestamp.valueOf(now);
-            ps.setTimestamp(1, timestamp);
-            ps.setString(2, uuid);
+            ps.setString(1, uuid);
             ps.executeUpdate();
             
             ps.close();
@@ -77,6 +85,19 @@ public class ChoiceDAO {
     	String timeCompleted= resultSet.getTimestamp("timeCompleted") == null ? null : resultSet.getTimestamp("timeCompleted").toString();
     
 		return new ChoiceReportChoice(name, uuid, timeCreated, timeCompleted);
+	}
+
+	public void deleteChoices(float days) throws Exception {
+		try {
+            PreparedStatement ps = conn.prepareStatement("delete from ChoiceTable where timeCreated <= (now() - interval ? second) AND UUID != \"\";");
+            float seconds = days * 86400;
+            ps.setFloat(1, seconds);
+            ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+            throw new Exception("Failed in deleting choices: " + e.getMessage());	
+		}
+		
 	}
 
 }

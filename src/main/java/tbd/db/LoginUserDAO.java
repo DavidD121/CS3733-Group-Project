@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import tbd.model.Alternative;
 import tbd.model.Choice;
+import tbd.model.ChoiceReportChoice;
 import tbd.model.Constant;
 import tbd.model.User;
 
@@ -21,7 +22,8 @@ public class LoginUserDAO {
 
 	java.sql.Connection conn;
 	
-	final String tblName = "UserTable";
+	final String userTable = "UserTable";
+	final String choiceTable = "ChoiceTable";
 
     public LoginUserDAO() {
     	try  {
@@ -37,7 +39,7 @@ public class LoginUserDAO {
         
         try {
             User user = null;
-            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + tblName + " WHERE choiceID=? and name=?;");
+            PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + userTable + " WHERE choiceID=? and name=?;");
             ps.setString(1, choiceUUID);
             ps.setString(2, name);
             ResultSet resultSet = ps.executeQuery();
@@ -67,7 +69,7 @@ public class LoginUserDAO {
 	public User createNewUser(String choiceUUID, String name, String password) throws Exception {
         try {
             User user = null;
-            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + tblName + " (userID, choiceID, name, password) VALUES (?, ?, ?, ?);");
+            PreparedStatement ps = conn.prepareStatement("INSERT INTO " + userTable + " (userID, choiceID, name, password) VALUES (?, ?, ?, ?);");
             
             UUID uuid = UUID.randomUUID();
 			String shortenedUUID = uuid.toString().substring(0, 5);
@@ -88,6 +90,41 @@ public class LoginUserDAO {
         } catch (Exception e) {
         	e.printStackTrace();
             throw new Exception("Failed in getting constant: " + e.getMessage());
+        }
+	}
+	
+	public boolean isSpaceInChoice(String choiceUUID) throws Exception {
+		try {
+			PreparedStatement ps = conn.prepareStatement("SELECT * FROM " + choiceTable + " where UUID = ?;");
+            ps.setString(1, choiceUUID);
+			ResultSet resultSet = ps.executeQuery();
+            resultSet.next();
+			int maxUsers = resultSet.getInt("teamMembers");
+			
+			ps = conn.prepareStatement("SELECT * FROM " + userTable + " where choiceID = ?;");
+            ps.setString(1, choiceUUID);
+            
+			resultSet = ps.executeQuery();
+
+            
+			int usersInChoice = 0;
+
+            while (resultSet.next()) {
+                usersInChoice++;
+            }
+            resultSet.close();
+            ps.close();
+            
+            if(usersInChoice < maxUsers) {
+            	return true;	
+            } else {
+            	return false;
+            }
+            
+
+        } catch (Exception e) {
+        	e.printStackTrace();
+            throw new Exception("Failed in getting all choices: " + e.getMessage());
         }
 	}
 

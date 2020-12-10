@@ -52,10 +52,25 @@ public class CreateUser implements RequestHandler<LoginUserRequest,LoginUserResp
 			}
 		}
 		catch (Exception e) {
-			System.out.println("getUser failed!");
+			System.out.println("createUser failed!");
 			return null;
 		}
 	}
+	
+	boolean isSpace(String choiceID) {
+		try {
+			if (logger != null) { logger.log("in checkFull"); }
+			LoginUserDAO dao = new LoginUserDAO();
+			System.out.println("You connected!");
+			
+			return dao.isSpaceInChoice(choiceID);
+		}
+		catch (Exception e) {
+			System.out.println("checkFull failed!");
+			return false;
+		}
+	}
+	
 	
 	@Override
 	public LoginUserResponse handleRequest(LoginUserRequest req, Context context) {
@@ -66,18 +81,34 @@ public class CreateUser implements RequestHandler<LoginUserRequest,LoginUserResp
 		boolean fail = false;
 		String failMessage = "";
 		User user = null;
+		
 		try {
-			user = createUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
-			if (logger != null) { logger.log("New user " + user.getName() + " created"); }
+			if(!isSpace(req1.getChoiceID())) {
+				fail = true;
+				failMessage = "Choice is full";
+			}
 		} catch (Exception e) {
 			fail = true;
 			failMessage = "Failed to read database!";
 		}
 		
-		if(user == null) {
-			fail = true;
-			failMessage = "User already exists";
-		} 
+		if(!fail) {
+			try {
+				user = createUser(req1.getChoiceID(), req1.getName(), req1.getPassword());
+				if (logger != null) { logger.log("New user " + user.getName() + " created"); }
+			} catch (Exception e) {
+				fail = true;
+				failMessage = "Failed to read database!";
+			}
+			
+			if(user == null) {
+				fail = true;
+				failMessage = "User already exists";
+			} 
+		}
+		
+		
+		
 		
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
