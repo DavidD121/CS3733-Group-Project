@@ -37,7 +37,7 @@ public class ApproveAlternativeTest {
     public void testApproveAlternative() {
         ApproveAlternative handler = new ApproveAlternative();
         Context ctx = createContext();
-        ApproveAlternativeRequest input = new ApproveAlternativeRequest("e18d9", 4);
+        ApproveAlternativeRequest input = new ApproveAlternativeRequest("b1cea", 4);
         GenericResponse output = handler.handleRequest(input, ctx);
 
         // TODO: validate output here if needed.
