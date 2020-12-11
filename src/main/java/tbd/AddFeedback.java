@@ -18,10 +18,11 @@ import tbd.http.AddFeedbackRequest;
 import tbd.http.AddFeedbackResponse;
 import tbd.http.CreateChoiceResponse;
 import tbd.db.ChoiceDAO;
+import tbd.db.ChoiceLockedDAO;
+import tbd.db.CloseChoiceDAO;
 import tbd.db.FeedbackDAO;
 import tbd.db.GetChoiceDAO;
 import tbd.model.Choice;
-import tbd.model.Constant;
 
 public class AddFeedback implements RequestHandler<AddFeedbackRequest,AddFeedbackResponse> {
 
@@ -69,6 +70,19 @@ public class AddFeedback implements RequestHandler<AddFeedbackRequest,AddFeedbac
 		double val2 = 0.0;
 		Choice choice = null;
 		Timestamp t = new Timestamp(0);
+		
+		ChoiceLockedDAO daoTest = new ChoiceLockedDAO();
+		AddFeedbackResponse response;
+		try {
+			if(daoTest.isChoiceLocked(req1.getuuid())) {
+			
+				response = new AddFeedbackResponse(300);
+				return response;
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			//loadValueFromRDS("e");
 			//int a = getChoice(req1.getuuid());
@@ -81,7 +95,6 @@ public class AddFeedback implements RequestHandler<AddFeedbackRequest,AddFeedbac
 
 		// compute proper response and return. Note that the status code is internal to the HTTP response
 		// and has to be processed specifically by the client code.
-		AddFeedbackResponse response;
 		if (fail) {
 			response = new AddFeedbackResponse(400);
 		} else {

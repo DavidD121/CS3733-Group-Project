@@ -16,8 +16,10 @@ import tbd.http.GetChoiceResponse;
 import tbd.http.RateAlternativeRequest;
 import tbd.http.RateAlternativeResponse;
 import tbd.http.GetChoiceRequest;
+import tbd.http.AddFeedbackResponse;
 import tbd.http.CreateChoiceResponse;
 import tbd.db.ChoiceDAO;
+import tbd.db.ChoiceLockedDAO;
 import tbd.db.RateDAO;
 import tbd.model.Choice;
 import tbd.model.Constant;
@@ -140,6 +142,16 @@ public class RateAlternative implements RequestHandler<RateAlternativeRequest,Ra
 		double val2 = 0.0;
 		Choice choice = null;
 		RateAlternativeResponse response = new RateAlternativeResponse(400, 400, 400);
+		ChoiceLockedDAO daoTest = new ChoiceLockedDAO();
+		try {
+			if(daoTest.isChoiceLocked(req1.getuuid())) {
+				response = new RateAlternativeResponse(300, 300, 300);
+				return response;
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		try {
 			//loadValueFromRDS("e");
 			
