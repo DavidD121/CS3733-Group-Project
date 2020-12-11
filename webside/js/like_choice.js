@@ -10,7 +10,7 @@ function initialize(){
         let dislikeBtn = document.getElementById("alt" + i + "-dislike");
         dislikeBtn.addEventListener("click", function() { 
             if(!isLocked) {
-                dislike(i, "like"); 
+                like(i, "dislike"); 
             }
         });
     }   
@@ -35,6 +35,8 @@ function like(x, type) {
             if(info["statusCode"] == 200){
                 updateRating(x, parseInt(info["likeChange"],10), "like");
                 updateRating(x, parseInt(info["dislikeChange"],10), "dislike");
+            } else if(info["statusCode"] == 300) {
+                getChoiceInfo();        
             }
         }
     }

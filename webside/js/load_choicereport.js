@@ -17,9 +17,7 @@ function load_choice_report() {
 
 function processChoiceReportResponse(result) {
     let choiceReport = JSON.parse(result);
-    console.log(choiceReport);
     if(choiceReport["statusCode"] == 200){
-        console.log("pass");
         for(let i = 0; i < choiceReport["choiceList"].length; i++) {
             let choice = choiceReport["choiceList"][i];
             add_choice_in_report(choice.name, choice.uuid, choice.dateCompleted, choice.dateCreated);

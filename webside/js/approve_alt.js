@@ -12,21 +12,20 @@ function approveAlt(alt){
     let data = {};
     data["alternativeIndex"] = alt;
     
-    console.log(data);
     data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
 
     xhr.open("POST", choice_complete_url + "/" + choiceUUID, true);
     xhr.setRequestHeader('Content-Type','application/json');
     xhr.send(data);
-    console.log(data);
     xhr.onloadend = function () {
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if (info["statusCode"] == 200) {
                 setLocked(alt);
+            }  else if(info["statusCode"] == 300) {
+                getChoiceInfo();        
             }
-
         }
     }
 }

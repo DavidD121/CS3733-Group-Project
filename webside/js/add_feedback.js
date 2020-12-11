@@ -27,7 +27,6 @@ function addFeedback(alt){
         if (xhr.readyState == XMLHttpRequest.DONE) {
             let info = JSON.parse(xhr.responseText);
             if (info["statusCode"] == 200) {
-                console.log(info);
                 let name = userName;
                 let time = info["timeCreated"];
                 let feedbackContainer = document.getElementById("alt" + alt + "-feedback-container");
@@ -35,8 +34,9 @@ function addFeedback(alt){
                 let feedbackElem = createFeedbackElement(name, time, feedback);
                 feedbackContainer.appendChild(feedbackElem);
                 document.getElementById("alt" + alt + "-feedback").value = "";
+            }  else if(info["statusCode"] == 300) {
+                getChoiceInfo();        
             }
-
         }
     }
 }
