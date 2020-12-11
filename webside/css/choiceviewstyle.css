@@ -105,6 +105,8 @@ input {
     height: 100px;
     width: 80%;
     box-sizing: border-box;
+    font-family: 'Amaranth', sans-serif;
+
 }
 
 .feedback p {

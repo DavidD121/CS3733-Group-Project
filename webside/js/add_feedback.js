@@ -1,27 +1,19 @@
-function init3(){
-    const feedBtn1 = document.getElementById("alt1-feedbackBtn");
-    feedBtn1.addEventListener("click", function() { addFeedback(1); });
-
-    const feedBtn2 = document.getElementById("alt2-feedbackBtn");
-    feedBtn2.addEventListener("click", function() { addFeedback(2);});
-
-    const feedBtn3 = document.getElementById("alt3-feedbackBtn");
-    feedBtn3.addEventListener("click", function() {addFeedback(3);} );
-
-    const feedBtn4 = document.getElementById("alt4-feedbackBtn");
-    feedBtn4.addEventListener("click", function() {addFeedback(4); });
-
-    const feedBtn5 = document.getElementById("alt5-feedbackBtn");
-    feedBtn5.addEventListener("click", function() {addFeedback(5); });
+function init3(){ 
+    for(let i = 1; i <= 5; i++) {
+        let feedBtn = document.getElementById("alt" + i + "-feedbackBtn");
+        feedBtn.addEventListener("click", function() { 
+            if(!isLocked)
+                addFeedback(i); 
+        });
+    }
 }
 
 function addFeedback(alt){
     let data = {};
     data["userID"] = userUUID;
-    data["feedback"] = document.getElementById("alt" + alt + "-feedback").innerText;
+    data["feedback"] = document.getElementById("alt" + alt + "-feedback").value.replace(/[^a-zA-Z0-9_ ]/g, "<br>");
     let feedback = data["feedback"];
 
-    console.log(data);
     data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
 
@@ -41,6 +33,7 @@ function addFeedback(alt){
     
                 let feedbackElem = createFeedbackElement(name, time, feedback);
                 feedbackContainer.appendChild(feedbackElem);
+                document.getElementById("alt" + alt + "-feedback").value = "";
             }
 
         }
