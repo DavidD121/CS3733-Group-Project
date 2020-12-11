@@ -37,7 +37,7 @@ public class ApproveAlternativeTest {
     public void testApproveAlternative() {
         ApproveAlternative handler = new ApproveAlternative();
         Context ctx = createContext();
-        ApproveAlternativeRequest input = new ApproveAlternativeRequest("test5", 3);
+        ApproveAlternativeRequest input = new ApproveAlternativeRequest("e18d9", 4);
         GenericResponse output = handler.handleRequest(input, ctx);
 
         // TODO: validate output here if needed.
@@ -48,7 +48,7 @@ public class ApproveAlternativeTest {
     public void testApproveAlternativeLockedChoice() {
         ApproveAlternative handler = new ApproveAlternative();
         Context ctx = createContext();
-        ApproveAlternativeRequest input = new ApproveAlternativeRequest("2009a", 3);
+        ApproveAlternativeRequest input = new ApproveAlternativeRequest("2009a", 5);
         GenericResponse output = handler.handleRequest(input, ctx);
 
         // TODO: validate output here if needed.

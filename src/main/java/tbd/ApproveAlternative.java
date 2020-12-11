@@ -36,17 +36,7 @@ public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequ
 		boolean fail = false;
 		String failMessage = "";
 		
-		try {
-			fail = !closeChoice(req1.getChoiceID(), req1.getIndex());
-		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			fail = true;
-		}
-		
-		
-		
-        GenericResponse response;
+		GenericResponse response;
         
         ChoiceLockedDAO daoTest = new ChoiceLockedDAO();
 		try {
@@ -59,6 +49,18 @@ public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequ
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+        
+		
+		try {
+			fail = !closeChoice(req1.getChoiceID(), req1.getIndex());
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			fail = true;
+		}
+		
+		
+		
         
 		if (fail) {
 			response = new GenericResponse(400, failMessage);
