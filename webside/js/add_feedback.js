@@ -11,10 +11,10 @@ function init3(){
 function addFeedback(alt){
     let data = {};
     data["userID"] = userUUID;
-    data["feedback"] = document.getElementById("alt" + alt + "-feedback").value.replace(/[^a-zA-Z0-9_ ]/g, "<br>");
+    data["feedback"] = document.getElementById("alt" + alt + "-feedback").value.replace(/\n/ig, '<br>');
+    
     let feedback = data["feedback"];
 
-    console.log(data);
     data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
 

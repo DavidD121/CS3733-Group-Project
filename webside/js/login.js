@@ -66,8 +66,7 @@ function createAccount(){
                 updateUI(info["result"], name);
             }
             else {
-                console.log(info["error"]);
-                document.getElementById("loginError").innerText = "User already exists";
+                document.getElementById("loginError").innerText = info["error"];
             }
         }
         else {
