@@ -18,7 +18,7 @@ function init4(){
 function approveAlt(alt){
     let data = {};
     data["index"] = alt;
-    
+
     console.log(data);
     data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();

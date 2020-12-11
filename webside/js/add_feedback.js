@@ -21,7 +21,6 @@ function addFeedback(alt){
     data["feedback"] = document.getElementById("alt" + alt + "-feedback").innerText;
     let feedback = data["feedback"];
 
-    console.log(data);
     data = JSON.stringify(data);
     let xhr = new XMLHttpRequest();
 
