@@ -56,7 +56,6 @@ function loadAlt(alt, i){
     loadLikes(alt, i);
     loadDislikes(alt, i);
     loadFeedback(alt, i);
-    //loadApproval(alt, i);
 }
 
 function clearAlt(i) {

@@ -40,10 +40,13 @@ input {
     font-size: 40px;
 }
 
+#deleteChoicesTime {
+    width: 90%;
+}
+
 .contentPane h1 {
     margin: 100px;
 }
-
 
 .contentPane {
     margin: 20px auto;
