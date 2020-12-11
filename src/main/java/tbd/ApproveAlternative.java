@@ -5,6 +5,8 @@ import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import tbd.db.ChoiceDAO;
+import tbd.db.ChoiceLockedDAO;
+import tbd.http.AddFeedbackResponse;
 import tbd.http.AdminLoginRequest;
 import tbd.http.ApproveAlternativeRequest;
 import tbd.http.GenericResponse;
@@ -42,7 +44,22 @@ public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequ
 			fail = true;
 		}
 		
+		
+		
         GenericResponse response;
+        
+        ChoiceLockedDAO daoTest = new ChoiceLockedDAO();
+		try {
+			if(daoTest.isChoiceLocked(req1.getChoiceID())) {
+			
+				response = new GenericResponse(300);
+				return response;
+			}
+		} catch (Exception e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+        
 		if (fail) {
 			response = new GenericResponse(400, failMessage);
 		} else {

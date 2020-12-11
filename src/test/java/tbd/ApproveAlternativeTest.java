@@ -43,4 +43,15 @@ public class ApproveAlternativeTest {
         // TODO: validate output here if needed.
         Assert.assertEquals(output.statusCode, 200);
     }
+    
+    @Test
+    public void testApproveAlternativeLockedChoice() {
+        ApproveAlternative handler = new ApproveAlternative();
+        Context ctx = createContext();
+        ApproveAlternativeRequest input = new ApproveAlternativeRequest("2009a", 3);
+        GenericResponse output = handler.handleRequest(input, ctx);
+
+        // TODO: validate output here if needed.
+        Assert.assertEquals(output.statusCode, 300);
+    }
 }
