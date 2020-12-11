@@ -89,10 +89,16 @@ public class ChoiceDAO {
 
 	public void deleteChoices(float days) throws Exception {
 		try {
-            PreparedStatement ps = conn.prepareStatement("delete from ChoiceTable where timeCreated <= (now() - interval ? second) AND UUID != \"\";");
-            float seconds = days * 86400;
-            ps.setFloat(1, seconds);
-            ps.executeUpdate();
+			if(days == 0) {
+				PreparedStatement ps = conn.prepareStatement("delete from ChoiceTable where UUID != \"\";");
+				ps.executeUpdate();
+				
+			} else {
+	            PreparedStatement ps = conn.prepareStatement("delete from ChoiceTable where timeCreated <= (now() - interval ? second) AND UUID != \"\";");
+	            float seconds = days * 86400;
+	            ps.setFloat(1, seconds);
+	            ps.executeUpdate();
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
             throw new Exception("Failed in deleting choices: " + e.getMessage());	
