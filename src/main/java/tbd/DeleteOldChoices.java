@@ -6,28 +6,26 @@ import com.amazonaws.services.lambda.runtime.RequestHandler;
 
 import tbd.db.ChoiceDAO;
 import tbd.http.AdminLoginRequest;
-import tbd.http.ApproveAlternativeRequest;
+import tbd.http.DeleteOldChoicesRequest;
 import tbd.http.GenericResponse;
 
-public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequest, GenericResponse> {
+public class DeleteOldChoices implements RequestHandler<DeleteOldChoicesRequest, GenericResponse> {
 
 	LambdaLogger logger;
-	
-	boolean closeChoice(String uuid, int index) throws Exception {
+
+	void deleteChoices(float days) throws Exception{
 		try {
 			ChoiceDAO dao = new ChoiceDAO();
-			dao.closeChoice(uuid,index);
-			return true;
+			dao.deleteChoices(days);
 		} catch (Exception e) {
-			System.out.println("closeChoice failed!");
-			return false;
+			System.out.println("deleteChoices Failed");
 		}
-		
 	}
-
+	
     @Override
-    public GenericResponse handleRequest(ApproveAlternativeRequest req, Context context) {
-    	ApproveAlternativeRequest req1 = req;
+    public GenericResponse handleRequest(DeleteOldChoicesRequest req, Context context) {
+    	
+    	DeleteOldChoicesRequest req1 = req;
 		logger = context.getLogger();
 		logger.log("Loading Java Lambda handler of RequestHandler");
 		logger.log(req1.toString());
@@ -35,14 +33,13 @@ public class ApproveAlternative implements RequestHandler<ApproveAlternativeRequ
 		String failMessage = "";
 		
 		try {
-			fail = !closeChoice(req1.getChoiceID(), req1.getIndex());
+			deleteChoices(req.getDays());
 		} catch (Exception e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
 			fail = true;
+			failMessage = "failed to read database"; 
 		}
-		
-        GenericResponse response;
+    	
+    	GenericResponse response;
 		if (fail) {
 			response = new GenericResponse(400, failMessage);
 		} else {

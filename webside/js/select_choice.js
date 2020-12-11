@@ -1,6 +1,3 @@
-/*eslint-env browser*/
-/*global console*/
-// eslint-disable-line no-console
 function init() {
     selectChoice();
 }

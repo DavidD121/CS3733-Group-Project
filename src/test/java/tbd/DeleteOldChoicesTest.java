@@ -8,13 +8,13 @@ import org.junit.Test;
 
 import com.amazonaws.services.lambda.runtime.Context;
 
-import tbd.http.ApproveAlternativeRequest;
+import tbd.http.DeleteOldChoicesRequest;
 import tbd.http.GenericResponse;
 
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
-public class ApproveAlternativeTest {
+public class DeleteOldChoicesTest {
 
     private static Object input;
 
@@ -34,13 +34,15 @@ public class ApproveAlternativeTest {
     }
 
     @Test
-    public void testApproveAlternative() {
-        ApproveAlternative handler = new ApproveAlternative();
+    public void testDeleteOldChoices() {
+        DeleteOldChoices handler = new DeleteOldChoices();
         Context ctx = createContext();
-        ApproveAlternativeRequest input = new ApproveAlternativeRequest("test5", 1);
-        GenericResponse output = handler.handleRequest(input, ctx);
+        
+        DeleteOldChoicesRequest req = new DeleteOldChoicesRequest((float) 5.5);
+
+        GenericResponse output = handler.handleRequest(req, ctx);
 
         // TODO: validate output here if needed.
-        Assert.assertEquals(output.statusCode, 200);
+        Assert.assertEquals(200, output.statusCode);
     }
 }

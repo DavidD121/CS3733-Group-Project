@@ -46,7 +46,8 @@ public class RateAlternative implements RequestHandler<RateAlternativeRequest,Ra
 		RateDAO dao = new RateDAO();
 		if(dao.hasLikedAlternative(userID, choiceID, alternativeIndex)) {
 			System.out.println("Participant has already liked choice!");
-			return new RateAlternativeResponse(0, 0, 400);
+			dao.deleteLike(userID, alternativeIndex, choiceID);
+			return new RateAlternativeResponse(-1, 0, 200);
 		}
 		else if(dao.hasDislikedAlternative(userID, choiceID, alternativeIndex)) {
 			dao.deleteDislike(userID, alternativeIndex, choiceID);
@@ -83,7 +84,8 @@ public class RateAlternative implements RequestHandler<RateAlternativeRequest,Ra
 			RateDAO dao = new RateDAO();
 			if(dao.hasDislikedAlternative(userID, choiceID, alternativeIndex)) {
 				System.out.println("Participant has already disliked choice!");
-				return new RateAlternativeResponse(0, 0, 400);
+				dao.deleteDislike(userID, alternativeIndex, choiceID);
+				return new RateAlternativeResponse(0, -1, 200);
 			}
 			else if(dao.hasLikedAlternative(userID, choiceID, alternativeIndex)) {
 				// TODO: Broken here, doesn't subtract one but does remove from DB, 
@@ -150,6 +152,9 @@ public class RateAlternative implements RequestHandler<RateAlternativeRequest,Ra
 			else if(req1.gettype().equalsIgnoreCase("dislike") && !isNullOrEmpty(req1.getuserID())) {
 				RateAlternativeResponse dislike = addDislike(1, req1.getuuid(), req1.getalternative(), req1.getuserID());
 				response = dislike;
+			}
+			else {
+				System.out.println("Failed to do anything!");
 			}
 			
 			// OTHERWISE

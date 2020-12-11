@@ -1,6 +1,10 @@
 package tbd;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.UUID;
 
 import org.junit.Assert;
 import org.junit.BeforeClass;
@@ -8,13 +12,14 @@ import org.junit.Test;
 
 import com.amazonaws.services.lambda.runtime.Context;
 
-import tbd.http.ApproveAlternativeRequest;
-import tbd.http.GenericResponse;
+import edu.wpi.cs.heineman.demo.TestContext;
+
+import tbd.model.Feedback;
 
 /**
  * A simple test harness for locally invoking your Lambda function handler.
  */
-public class ApproveAlternativeTest {
+public class FeedbackClassTest {
 
     private static Object input;
 
@@ -34,13 +39,16 @@ public class ApproveAlternativeTest {
     }
 
     @Test
-    public void testApproveAlternative() {
-        ApproveAlternative handler = new ApproveAlternative();
-        Context ctx = createContext();
-        ApproveAlternativeRequest input = new ApproveAlternativeRequest("test5", 1);
-        GenericResponse output = handler.handleRequest(input, ctx);
+    public void testCreateFeedbackClass() {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+        LocalDateTime now = LocalDateTime.now();
+        Timestamp timestamp = Timestamp.valueOf(now);
+    	Feedback feedback = new Feedback("testuser", timestamp, "this is a test!");
+    	
+    	Assert.assertEquals("testuser", feedback.author);
+    	Assert.assertEquals("this is a test!", feedback.description);
 
-        // TODO: validate output here if needed.
-        Assert.assertEquals(output.statusCode, 200);
     }
+    
 }
+

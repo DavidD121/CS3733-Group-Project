@@ -1,5 +1,6 @@
 var choiceUUID;
 var totalAlternatives = 5;
+var isLocked = false;
 
 function init() {
     selectChoice();
@@ -10,8 +11,7 @@ function reload() {
    const btn = document.getElementById("pageReload");
     
     btn.addEventListener("click", function() {
-        selectChoice();
-        console.log("reload");
+        getChoiceInfo();
     });
 }
 
@@ -42,6 +42,10 @@ function processChoiceResponse(result) {
     if(uuid == -1) {
         window.location = "./404.html"; 
     } else {
+        isLocked = (choice["approvedAlternative"] != 0);
+        if (isLocked)
+            setLocked(choice["approvedAlternative"]);
+        
         document.getElementById("choiceUUID").innerHTML = "UUID: " + uuid;
         document.getElementById("choiceDescription").innerHTML = choice["description"];
         console.log(choice);
@@ -60,7 +64,7 @@ function processChoiceResponse(result) {
 }
 
 function setLocked(altIndex) {
-    for(let i = 1; i <= 5; i++) {
+    for(let i = 1; i <= totalAlternatives; i++) {
         if(i == altIndex)
             document.getElementById("alternative" + i).classList.add("approved");
         else
