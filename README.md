@@ -1,3 +1,6 @@
 "# TeamLisp" 
+Login Page:
+![](screenshotLogin.png)
 
-![Screenshot](screenshotChoice)
+Viewing decision page:
+![](screenshotChoice.png)
